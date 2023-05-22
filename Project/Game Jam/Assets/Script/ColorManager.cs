@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ColorManager : MonoBehaviour
-{
+public class ColorManager : MonoBehaviour {
     [SerializeField] Tilemap[] world;
     
     [ContextMenu("Change Color")]
