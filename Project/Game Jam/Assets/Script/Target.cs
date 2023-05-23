@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
     [SerializeField] SpriteRenderer sr;
-    [SerializeField] Color c;
     [SerializeField] Transform t;
-    [SerializeField] string type;
+    public TargetSO so;
     
     void Update() {
-        sr.color = new Color(c.r, c.g, c.b, 
-                             (Mathf.Sin(Time.realtimeSinceStartup * 2f) + 5/3f) * 0.375f);
+        sr.color = new Color(so.c.r, so.c.g, so.c.b, 
+                             (Mathf.Cos(Time.realtimeSinceStartup * 2f) + 5/3f) * 0.375f);
         Vector2 low = new Vector2(t.position.x, t.position.y);
         Vector2 high = new Vector2(t.position.x + 1f, t.position.y + 1f);
         if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
@@ -18,17 +17,13 @@ public class Target : MonoBehaviour {
         }
     }
 
-    public void SetColor(Color c) {
-        this.c = c;
-    }
-
     public void Destroy() {
         Object.Destroy(gameObject);
     }
 
     public void onClick() {
-        if (type == "move") {
-            Util.getP().setPos(new Vector2(t.position.x, t.position.y));
+        if (so.type == "move") {
+            Util.getP().move(new Vector2(t.position.x, t.position.y));
         }
     }
 }

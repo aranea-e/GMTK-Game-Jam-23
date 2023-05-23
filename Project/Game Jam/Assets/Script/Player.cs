@@ -13,4 +13,9 @@ public class Player : MonoBehaviour
     public void setPos(Vector2 v) {
         t.position = new Vector3(v.x, v.y, 0f);
     }
+
+    public void move(Vector2 v) {
+        setPos(v);
+        GameManager.onPlayerAction();
+    }
 }
