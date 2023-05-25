@@ -8,7 +8,7 @@ public class Target : MonoBehaviour {
     public TargetSO so;
     float timeSinceSpawn;
     
-    void Update() {
+    public void Update() {
         timeSinceSpawn += Time.deltaTime;
         sr.color = new Color(so.c.r, so.c.g, so.c.b, 
                              (Mathf.Cos(timeSinceSpawn * 2f) + 5/3f) * 0.375f);

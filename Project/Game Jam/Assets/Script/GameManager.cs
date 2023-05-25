@@ -8,12 +8,14 @@ public static class GameManager {
     static GameObject targetPrefab;
     public static List<Target> targetInstances;
     public static Tilemap[] world;
+    public static LayerMask wallLM;
 
-    public static void setup(TargetSO[] t, GameObject tp, Tilemap[] tmps) {
+    public static void setup(TargetSO[] t, GameObject tp, Tilemap[] tmps, LayerMask lm) {
         targets = t;
         targetPrefab = tp;
         targetInstances =  new List<Target>();
         world = tmps;
+        wallLM = lm;
     }
 
     public static void start() {
@@ -43,6 +45,7 @@ public static class GameManager {
     static void instantiateTarget(TargetSO so, GameObject p, Vector3 pos) {
         targetInstances.Add(Object.Instantiate(p, pos, Quaternion.identity).GetComponent<Target>());
         targetInstances[targetInstances.Count - 1].so = so;
+        targetInstances[targetInstances.Count - 1].Update();
     }
 
     static void destroyAllTargets() {

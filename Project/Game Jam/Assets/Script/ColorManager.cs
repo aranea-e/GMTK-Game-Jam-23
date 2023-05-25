@@ -5,6 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class ColorManager : MonoBehaviour {
     [SerializeField] Tilemap[] world;
+
+    void Start() {
+        setColor();
+    }
     
     [ContextMenu("Change Color")]
     public Color setColor() {

@@ -7,7 +7,7 @@ public static class Pathfind {
     public static List<Vector3> coords;
     public static Vector3 target;
 
-    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran) {
+    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran) {
         target = t;
         pts = new List<PathfindTarget>();
         coords = new List<Vector3>();
@@ -30,7 +30,24 @@ public static class Pathfind {
                 }
             }
         }
-        
+
+        if (resultT == null) {
+            return s;
+        }
+
+        if (resultT.distance < ran && lineOfSight(s, t)) {
+            Debug.Log("attack");
+            return s;
+        }
+
         return result;
+    }
+
+    static bool lineOfSight(Vector2 s, Vector2 t) {
+        s = new Vector2(s.x + .5f, s.y + .5f);
+        t = new Vector2(t.x + .5f, t.y + .5f);
+        Vector2 direction = t - s;
+        RaycastHit2D result = Physics2D.Raycast(s, direction, Vector2.Distance(s, t), GameManager.wallLM);
+        return result.collider == null;
     }
 }

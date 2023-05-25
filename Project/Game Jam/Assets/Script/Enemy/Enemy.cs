@@ -22,6 +22,6 @@ public class Enemy : MonoBehaviour
 
     [ContextMenu("pathfind")]
     public void pathfind() {
-        t.position = so.ai.pathfind(t.position, Util.getP().t.position, so.spd, so.vran);
+        t.position = so.ai.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran);
     }
 }
