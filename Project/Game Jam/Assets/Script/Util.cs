@@ -22,4 +22,9 @@ public static class Util {
     public static Player getP() {
         return p;
     }
+
+    public static bool tileAvailable(Vector3 v) {
+        return (!GameManager.world[0].HasTile(Vector3Int.FloorToInt(v)) 
+                && GameManager.world[1].HasTile(Vector3Int.FloorToInt(v)));
+    }
 }

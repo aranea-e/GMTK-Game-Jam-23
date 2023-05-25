@@ -6,10 +6,12 @@ public class Target : MonoBehaviour {
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Transform t;
     public TargetSO so;
+    float timeSinceSpawn;
     
     void Update() {
+        timeSinceSpawn += Time.deltaTime;
         sr.color = new Color(so.c.r, so.c.g, so.c.b, 
-                             (Mathf.Cos(Time.realtimeSinceStartup * 2f) + 5/3f) * 0.375f);
+                             (Mathf.Cos(timeSinceSpawn * 2f) + 5/3f) * 0.375f);
         Vector2 low = new Vector2(t.position.x, t.position.y);
         Vector2 high = new Vector2(t.position.x + 1f, t.position.y + 1f);
         if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {

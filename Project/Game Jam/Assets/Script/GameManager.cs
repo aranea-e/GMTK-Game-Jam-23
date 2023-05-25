@@ -7,7 +7,7 @@ public static class GameManager {
     static TargetSO[] targets;
     static GameObject targetPrefab;
     public static List<Target> targetInstances;
-    static Tilemap[] world;
+    public static Tilemap[] world;
 
     public static void setup(TargetSO[] t, GameObject tp, Tilemap[] tmps) {
         targets = t;
@@ -31,7 +31,7 @@ public static class GameManager {
                             new Vector3(Util.getP().t.position.x, Util.getP().t.position.y + 1, 0),
                             new Vector3(Util.getP().t.position.x, Util.getP().t.position.y - 1, 0)};
         foreach (Vector3 v in coords) {
-            if (!world[0].HasTile(Vector3Int.FloorToInt(v))) {
+            if (Util.tileAvailable(v)) {
                 instantiateTarget(targets[0], targetPrefab, v);
             }
         }
