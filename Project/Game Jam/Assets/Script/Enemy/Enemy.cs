@@ -5,23 +5,18 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemySO so;
-    [SerializeField] Transform t;
+    public Transform t;
+    public SpriteRenderer sr;
+    public Sprite[] s;
     float timer;
-
-    void Awake() {
-        switch (so.aiType) {
-            case "basic":
-                so.ai = new Basic();
-                break;
-            
-            default:
-                so.ai = new AI();
-                break;
-        }
-    }
 
     [ContextMenu("pathfind")]
     public void pathfind() {
-        t.position = so.ai.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran);
+        moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran, this));
+    }
+
+    void moveTo(Vector3 p) {
+        Util.face(t.position, p, sr, s);
+        t.position = p;
     }
 }

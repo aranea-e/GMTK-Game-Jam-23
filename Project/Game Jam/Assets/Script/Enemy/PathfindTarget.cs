@@ -27,6 +27,10 @@ public class PathfindTarget {
                 createdPTs[i] = new PathfindTarget(coords[i], this, distance + 1);
                 Pathfind.coords.Add(coords[i]);
                 Pathfind.pts.Add(createdPTs[i]);
+            } else if (Util.creatureOccupying(coords[i]) && (coords[i] == Pathfind.current.t.position)) {
+                createdPTs[i] = new PathfindTarget(coords[i], this, distance + 1);
+                Pathfind.coords.Add(coords[i]);
+                Pathfind.pts.Add(createdPTs[i]);
             }
         }
         foreach (PathfindTarget p in createdPTs) {

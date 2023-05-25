@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "Enemy", order = 2)]
 public class EnemySO : ScriptableObject {
     public Sprite s;
-    public AI ai;
-    public string aiType;
     public int hp;
     public int def;
     public int atk;

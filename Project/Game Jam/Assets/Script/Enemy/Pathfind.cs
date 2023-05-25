@@ -6,9 +6,11 @@ public static class Pathfind {
     public static List<PathfindTarget> pts;
     public static List<Vector3> coords;
     public static Vector3 target;
+    public static Enemy current;
 
-    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran) {
+    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran, Enemy c) {
         target = t;
+        current = c;
         pts = new List<PathfindTarget>();
         coords = new List<Vector3>();
 
@@ -37,6 +39,7 @@ public static class Pathfind {
 
         if (resultT.distance < ran && lineOfSight(s, t)) {
             Debug.Log("attack");
+            Util.face(s - t, current.sr, current.s);
             return s;
         }
 
