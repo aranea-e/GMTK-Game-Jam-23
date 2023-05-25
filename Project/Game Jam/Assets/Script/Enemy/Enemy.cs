@@ -20,14 +20,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update() {
-        timer += Time.deltaTime;
-        if (timer > 1) {
-            pathfind();
-            timer = 0;
-        }
-    }
-
     [ContextMenu("pathfind")]
     public void pathfind() {
         t.position = so.ai.pathfind(t.position, Util.getP().t.position, so.spd, so.vran);

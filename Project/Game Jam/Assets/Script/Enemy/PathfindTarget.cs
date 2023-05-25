@@ -15,10 +15,10 @@ public class PathfindTarget {
     }
 
     public void pathfindFromTarget() {
-        Vector3[] coords = {new Vector3(pos.x + 1, pos.y, 0),
-                            new Vector3(pos.x - 1, pos.y, 0),
-                            new Vector3(pos.x, pos.y + 1, 0),
-                            new Vector3(pos.x, pos.y - 1, 0)};
+        Vector3[] coords = {new Vector3(pos.x, pos.y + 1, 0),
+                            new Vector3(pos.x, pos.y - 1, 0),
+                            new Vector3(pos.x + 1, pos.y, 0),
+                            new Vector3(pos.x - 1, pos.y, 0)};
         PathfindTarget[] createdPTs = new PathfindTarget[4];
         for (int i = 0; i < 4; i++) {
             if (Pathfind.coords.Contains(coords[i])) {
@@ -40,6 +40,12 @@ public class PathfindTarget {
         for (int i = 0; i < Pathfind.coords.Count; i++) {
             if (Pathfind.coords[i].Equals(v)) {
                 if (Pathfind.pts[i].distance > this.distance + 1) {
+                    Pathfind.pts[i].distance = distance + 1;
+                    Pathfind.pts[i].from = this;
+                    return Pathfind.pts[i];
+                } else if (Pathfind.pts[i].distance.Equals(this.distance + 1) 
+                            && Vector3.Distance(Pathfind.target, Pathfind.pts[i].from.pos) > 
+                               Vector3.Distance(Pathfind.target, pos)) {
                     Pathfind.pts[i].distance = distance + 1;
                     Pathfind.pts[i].from = this;
                     return Pathfind.pts[i];

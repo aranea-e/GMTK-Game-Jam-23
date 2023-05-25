@@ -21,6 +21,9 @@ public static class GameManager {
     }
 
     public static void onPlayerAction() {
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            e.pathfind();
+        }
         destroyAllTargets();
         createMoveTargets();
     }

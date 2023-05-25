@@ -5,8 +5,10 @@ using UnityEngine;
 public static class Pathfind {
     public static List<PathfindTarget> pts;
     public static List<Vector3> coords;
+    public static Vector3 target;
 
     public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran) {
+        target = t;
         pts = new List<PathfindTarget>();
         coords = new List<Vector3>();
 
