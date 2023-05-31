@@ -50,7 +50,7 @@ public class AttackAnim : MonoBehaviour
         } else {
             t.position = from + new Vector3(0.5f, 0.5f, 0);
             Vector3 target = from - to;
-            float mod = Util.calculateMod(timer) * 60 - 30;
+            float mod = Util.calculateMod(timer) * (0 - 60) + 30;
             float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg + 90 + mod;
             target = Quaternion.AngleAxis(angle - 90, Vector3.forward) * Vector3.right;
             t.position = Vector3.MoveTowards(t.position, t.position - target, 1f);
