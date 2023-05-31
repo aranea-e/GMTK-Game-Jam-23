@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 public class GameManagerHelper : MonoBehaviour {
     [SerializeField] TargetSO[] targets;
     [SerializeField] GameObject targetPrefab;
+    [SerializeField] GameObject attackPrefab;
     [SerializeField] Tilemap[] world;
     [SerializeField] LayerMask lm;
 
     void Awake() {
-        GameManager.setup(targets, targetPrefab, world, lm);
+        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm);
     }
 
     void Start() {

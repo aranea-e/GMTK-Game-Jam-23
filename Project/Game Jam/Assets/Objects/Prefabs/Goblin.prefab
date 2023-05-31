@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   so: {fileID: 11400000, guid: 46eaea64e959c9e42b0f2ac70b273561, type: 2}
   t: {fileID: 2916939831208577107}
+  srt: {fileID: 2916939830865540272}
   sr: {fileID: 2916939830865540273}
   s:
   - {fileID: -363044645, guid: b1bc86f2ad047534cb44fb47203a3472, type: 3}

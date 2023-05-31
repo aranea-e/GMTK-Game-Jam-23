@@ -11,4 +11,5 @@ public class EnemySO : ScriptableObject {
     public int ran;
     public int spd;
     public int vran;
+    public Sprite atks;
 }

@@ -8,7 +8,7 @@ public static class Pathfind {
     public static Vector3 target;
     public static Enemy current;
 
-    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran, Enemy c) {
+    public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran, Enemy c, bool attack) {
         target = t;
         current = c;
         pts = new List<PathfindTarget>();
@@ -37,20 +37,16 @@ public static class Pathfind {
             return s;
         }
 
-        if (resultT.distance < ran && lineOfSight(s, t)) {
-            Debug.Log("attack");
+        if (resultT.distance < ran && Util.lineOfSight(s, t)) {
+            if (attack) {
+                current.attack(target);
+            } else {
+                return t;
+            }
             Util.face(s - t, current.sr, current.s);
             return s;
         }
 
         return result;
-    }
-
-    static bool lineOfSight(Vector2 s, Vector2 t) {
-        s = new Vector2(s.x + .5f, s.y + .5f);
-        t = new Vector2(t.x + .5f, t.y + .5f);
-        Vector2 direction = t - s;
-        RaycastHit2D result = Physics2D.Raycast(s, direction, Vector2.Distance(s, t), GameManager.wallLM);
-        return result.collider == null;
     }
 }

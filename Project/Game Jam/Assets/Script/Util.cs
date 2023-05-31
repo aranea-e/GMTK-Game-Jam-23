@@ -66,4 +66,21 @@ public static class Util {
             }
         }
     }
+
+    public static void moveSprite(Transform srt, Vector3 from, Vector3 to, float t) {
+        Vector3 mod = (to - from) * (calculateMod(t));
+        srt.position = from + mod + new Vector3(0.5f, 0.5f, 0);
+    }
+
+    public static float calculateMod(float t) {
+        return (-Mathf.Cos(2 * Mathf.PI * t) / 2) + 0.5f;
+    }
+
+    public static bool lineOfSight(Vector2 s, Vector2 t) {
+        s = new Vector2(s.x + .5f, s.y + .5f);
+        t = new Vector2(t.x + .5f, t.y + .5f);
+        Vector2 direction = t - s;
+        RaycastHit2D result = Physics2D.Raycast(s, direction, Vector2.Distance(s, t), GameManager.wallLM);
+        return result.collider == null;
+    }
 }

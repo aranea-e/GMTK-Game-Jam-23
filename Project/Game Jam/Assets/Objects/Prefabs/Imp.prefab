@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   so: {fileID: 11400000, guid: b83b0449fa889874fa05e42051a5f773, type: 2}
   t: {fileID: 2663445435963583676}
+  srt: {fileID: 2663445436365394006}
   sr: {fileID: 2663445436365394007}
   s:
   - {fileID: -1252660440, guid: 297cbbba6478d264b827332a85bc75fa, type: 3}
