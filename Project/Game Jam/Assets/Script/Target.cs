@@ -42,5 +42,6 @@ public class Target : MonoBehaviour {
                 Util.getP().attack(t.position);
                 break;
         }
+        GameManager.onPlayerAction();
     }
 }

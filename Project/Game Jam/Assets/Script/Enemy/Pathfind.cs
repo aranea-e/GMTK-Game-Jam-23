@@ -7,6 +7,7 @@ public static class Pathfind {
     public static List<Vector3> coords;
     public static Vector3 target;
     public static Enemy current;
+    public static int distance;
 
     public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran, Enemy c, bool attack) {
         target = t;
@@ -21,11 +22,12 @@ public static class Pathfind {
         Vector3 result = s;
         PathfindTarget resultT = null;
         for (int i = 0; i < pts.Count; i++) {
-            if (coords[i] == s && pts[i].distance < vran + 1) {
+            if (coords[i] == s && coords[i] != t && pts[i].distance < vran + 1) {
                 result = coords[i];
                 resultT = pts[i];
+                distance = pts[i].distance;
                 for (int j = 0; j < spd; j++) {
-                    if (resultT.from != null) {
+                    if (resultT.from != null && resultT.from.pos != t) {
                         resultT = resultT.from;
                         result = resultT.pos;
                     }
@@ -37,8 +39,8 @@ public static class Pathfind {
             return s;
         }
 
-        if (resultT.distance < ran && Util.lineOfSight(s, t)) {
-            if (attack) {
+        if (distance - 1 < ran && Util.lineOfSight(s, t)) {
+            if (attack && current.hp > 0) {
                 current.attack(target);
             } else {
                 return t;

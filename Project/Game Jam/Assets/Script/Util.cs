@@ -4,9 +4,11 @@ using UnityEngine;
 
 public static class Util {
     static Player p;
+    static Transform door;
 
-    public static void startup(Player player) {
+    public static void startup(Player player, Transform d) {
         p = player;
+        door = d;
     }
     
     public static Vector2 mousePosition() {
@@ -32,10 +34,23 @@ public static class Util {
         return false;
     }
 
+    public static bool enemiesMoving() {
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (e.t.position != e.last) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static bool tileAvailable(Vector3 v) {
         return (!GameManager.world[0].HasTile(Vector3Int.FloorToInt(v)) 
                 && GameManager.world[1].HasTile(Vector3Int.FloorToInt(v))
-                && !creatureOccupying(v));
+                && !creatureOccupying(v) && !isDoor(v));
+    }
+
+    public static bool isDoor(Vector3 v) {
+        return (v == door.position);
     }
 
     public static void face(Vector2 start, Vector2 target, SpriteRenderer sr, Sprite[] s) {

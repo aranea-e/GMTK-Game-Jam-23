@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class ColorManager : MonoBehaviour {
     [SerializeField] Tilemap[] world;
+    [SerializeField] SpriteRenderer dsr;
 
     void Start() {
         setColor();
@@ -31,6 +32,7 @@ public class ColorManager : MonoBehaviour {
             t.RefreshAllTiles();
         }
         Camera.main.backgroundColor = new Color(c.r * (44/255.0f), c.g * (44/255.0f), c.b * (44/255.0f), 1f);
+        dsr.color = c;
         return c;
     }
 
@@ -40,6 +42,7 @@ public class ColorManager : MonoBehaviour {
             t.RefreshAllTiles();
         }
         Camera.main.backgroundColor = new Color(c.r * (44/255.0f), c.g * (44/255.0f), c.b * (44/255.0f), 1f);
+        dsr.color = c;
         return c;
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PathfindTarget {
     public Vector3 pos;
-    public PathfindTarget to;
     public PathfindTarget from;
     public int distance;
 

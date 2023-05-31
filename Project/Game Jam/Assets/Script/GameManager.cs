@@ -40,7 +40,7 @@ public static class GameManager {
                             new Vector3(Util.getP().t.position.x, Util.getP().t.position.y + 1, 0),
                             new Vector3(Util.getP().t.position.x, Util.getP().t.position.y - 1, 0)};
         foreach (Vector3 v in coords) {
-            if (Util.tileAvailable(v)) {
+            if (Util.tileAvailable(v) || Util.isDoor(v)) {
                 instantiateTarget(targets[0], targetPrefab, v);
             }
         }
@@ -48,7 +48,7 @@ public static class GameManager {
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
             if (Util.lineOfSight(Util.getP().t.position, e.t.position)
                 && Pathfind.pathfind(e.t.position, Util.getP().t.position, e.so.spd, 
-                                     Util.getP().ran, Util.getP().ran, e, false) != e.t.position) {
+                                     Util.getP().w.ran, Util.getP().w.ran, e, false) != e.t.position) {
                 instantiateTarget(targets[1], targetPrefab, e.t.position);
             }
         }
