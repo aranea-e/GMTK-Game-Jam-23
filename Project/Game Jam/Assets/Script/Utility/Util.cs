@@ -34,6 +34,15 @@ public static class Util {
         return false;
     }
 
+    public static Item itemOccupying(Vector3 v) {
+        foreach (Item i in Object.FindObjectsOfType<Item>()) {
+            if (i.t.position == v) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public static bool enemiesMoving() {
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
             if (e.t.position != e.last) {

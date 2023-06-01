@@ -9,14 +9,15 @@ public class Player : MonoBehaviour {
     [SerializeField] Transform srt;
     [SerializeField] Sprite[] s;
     Vector3 last;
-    [SerializeField] Weapon[] ws;
-    public Weapon w;
+    public WeaponSO w;
     public int mhp;
     public int hp;
     [SerializeField] Transform hpbar;
+    Inventory inven;
     
     void Awake() {
         last = t.position;
+        inven = FindObjectOfType<Inventory>();
         Util.startup(this, door);
     }
 
@@ -52,6 +53,10 @@ public class Player : MonoBehaviour {
     public void move(Vector2 v) {
         if (Util.isDoor(v)) {
             Debug.Log("u win!!1!");
+        }
+        if (Util.itemOccupying(v) != null) {
+            inven.addSlot(Util.itemOccupying(v).w);
+            Destroy(Util.itemOccupying(v).gameObject);
         }
         Util.face(t.position, v, sr, s);
         setPos(v);
