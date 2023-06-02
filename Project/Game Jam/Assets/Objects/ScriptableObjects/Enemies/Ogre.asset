@@ -18,5 +18,5 @@ MonoBehaviour:
   atk: 3
   ran: 1
   spd: 1
-  vran: 7
-  atks: {fileID: 215000585, guid: 4ae7084feacb95c488c650b85d3feb1c, type: 3}
+  vran: 4
+  atks: {fileID: 760592498, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

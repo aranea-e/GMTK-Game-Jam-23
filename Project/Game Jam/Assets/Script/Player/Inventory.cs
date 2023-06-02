@@ -22,6 +22,11 @@ public class Inventory : MonoBehaviour {
                 }
                 Util.getP().w = slots[i].GetComponent<Weapon>().w;
             }
+            if (slots[i].GetComponent<Weapon>().w != null && Util.getP().w == slots[i].GetComponent<Weapon>().w) {
+                slots[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, .8f, .65f);
+            } else {
+                slots[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
+            }
         }
     }
 
@@ -31,5 +36,30 @@ public class Inventory : MonoBehaviour {
         slots[slots.Count - 1].GetComponent<Weapon>().w = w;
         slots[slots.Count - 1].GetComponent<Weapon>().s.sprite = w.s;
         Update();
+    }
+
+    [ContextMenu("add slot")]
+    public void addSlot() {
+        slots.Add(Instantiate(slotPF, gameObject.transform.position, Quaternion.identity));
+        slots[slots.Count - 1].transform.parent = gameObject.transform;
+        slots[slots.Count - 1].GetComponent<Weapon>().w = null;
+        Update();
+    }
+
+    public void changeSlot(int index, WeaponSO w) {
+        slots[index].GetComponent<Weapon>().w = w;
+        slots[index].GetComponent<Weapon>().s.sprite = w.s;
+    }
+
+    public bool changeSlot(WeaponSO w) {
+        foreach (GameObject slot in slots) {
+            if (slot.GetComponent<Weapon>().w == null) {
+                slot.GetComponent<Weapon>().w = w;
+                slot.GetComponent<Weapon>().s.sprite = w.s;
+                Update();
+                return true;
+            }
+        }
+        return false;
     }
 }

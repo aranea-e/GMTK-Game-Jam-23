@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ran: 1
   atk: 6
-  s: {fileID: 502850824, guid: 4ae7084feacb95c488c650b85d3feb1c, type: 3}
+  s: {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

@@ -55,8 +55,17 @@ public class Player : MonoBehaviour {
             Debug.Log("u win!!1!");
         }
         if (Util.itemOccupying(v) != null) {
-            inven.addSlot(Util.itemOccupying(v).w);
-            Destroy(Util.itemOccupying(v).gameObject);
+            if (Util.itemOccupying(v).invenSlot) {
+                inven.addSlot();
+                Destroy(Util.itemOccupying(v).gameObject);
+            } else if (!inven.changeSlot(Util.itemOccupying(v).w)) {
+                if (GameManager.infiniteInven) {
+                    inven.addSlot(Util.itemOccupying(v).w);
+                    Destroy(Util.itemOccupying(v).gameObject);
+                }
+            } else {
+                Destroy(Util.itemOccupying(v).gameObject);
+            }
         }
         Util.face(t.position, v, sr, s);
         setPos(v);

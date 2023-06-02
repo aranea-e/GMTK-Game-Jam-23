@@ -11,13 +11,15 @@ public static class GameManager {
     public static Tilemap[] world;
     public static LayerMask wallLM;
     public static float timer;
+    public static bool infiniteInven;
 
-    public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, LayerMask lm) {
+    public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, LayerMask lm, bool ii) {
         targets = t;
         targetPrefab = tp;
         attackPrefab = ap;
         world = tmps;
         wallLM = lm;
+        infiniteInven = ii;
     }
 
     public static void start() {
