@@ -26,6 +26,7 @@ public class CardCanvas : MonoBehaviour {
             if (Util.mousePosition().y - Util.screenBottom() < 3f/2f) {
                 rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 3f/2f);
             }
+            found = true;
         }
         if (Util.creatureOccupying(Util.mousePositionInt())) {
             if (c != null){
@@ -37,6 +38,7 @@ public class CardCanvas : MonoBehaviour {
             if (Util.mousePosition().y - Util.screenBottom() < 41f/16f) {
                 rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 41f/16f);
             }
+            found = true;
         }
         if (Util.slotAt(Util.mousePosition()) != null && Util.slotAt(Util.mousePosition()).w != null) {
             if (c != null){
@@ -46,6 +48,7 @@ public class CardCanvas : MonoBehaviour {
             weapon = Util.slotAt(Util.mousePositionInt());
             type = 2;
             rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 3f/2f);
+            found = true;
         }
         
 
