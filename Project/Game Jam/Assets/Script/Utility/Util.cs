@@ -18,12 +18,17 @@ public static class Util {
         return new Vector2(Mathf.Floor(mousePosition().x), Mathf.Floor(mousePosition().y));
     }
 
+    public static float screenBottom() {
+        return Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)).y;
+    }
+
     public static bool mouseInBounds(Vector2 low, Vector2 high) {
         return low.x <= mousePosition().x &&
                low.y <= mousePosition().y &&
                high.x >= mousePosition().x &&
                high.y >= mousePosition().y;
     }
+
     public static Player getP() {
         return p;
     }
@@ -53,6 +58,10 @@ public static class Util {
             }
         }
         return null;
+    }
+
+    public static Weapon slotAt(Vector2 v) {
+        return p.inven.slotAt(v);
     }
 
     public static bool enemiesMoving() {

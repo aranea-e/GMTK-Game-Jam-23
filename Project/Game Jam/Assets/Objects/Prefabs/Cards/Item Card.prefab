@@ -1296,6 +1296,7 @@ MonoBehaviour:
   - {fileID: 6226575467789461503}
   - {fileID: 4953819129021974566}
   - {fileID: 6705354997842804097}
+  rt: {fileID: 2835510073275727249}
 --- !u!1 &8041819302081944749
 GameObject:
   m_ObjectHideFlags: 0

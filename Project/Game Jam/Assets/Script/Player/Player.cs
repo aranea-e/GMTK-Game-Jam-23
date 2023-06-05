@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
     public int mhp;
     public int hp;
     [SerializeField] Transform hpbar;
-    Inventory inven;
+    public Inventory inven;
     
     void Awake() {
         last = t.position;

@@ -9,7 +9,8 @@ public class CardCanvas : MonoBehaviour {
     [SerializeField] RectTransform rt;
     Item item;
     Enemy enemy;
-    bool isItem;
+    Weapon weapon;
+    int type;
 
 
     void Update() {
@@ -21,8 +22,10 @@ public class CardCanvas : MonoBehaviour {
         if (Util.itemOccupying(Util.mousePositionInt()) != null && !Util.itemOccupying(Util.mousePositionInt()).invenSlot) {
             c = Instantiate(co[0], rt).GetComponent<Card>();
             item = Util.itemOccupying(Util.mousePositionInt());
-            isItem = true;
-            found = true;
+            type = 0;
+            if (Util.mousePosition().y - Util.screenBottom() < 3f/2f) {
+                rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 3f/2f);
+            }
         }
         if (Util.creatureOccupying(Util.mousePositionInt())) {
             if (c != null){
@@ -30,20 +33,42 @@ public class CardCanvas : MonoBehaviour {
             }
             c = Instantiate(co[1], rt).GetComponent<Card>();
             enemy = Util.creatureAt(Util.mousePositionInt());
-            isItem = false;
-            found = true;
+            type = 1;
+            if (Util.mousePosition().y - Util.screenBottom() < 41f/16f) {
+                rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 41f/16f);
+            }
         }
+        if (Util.slotAt(Util.mousePosition()) != null && Util.slotAt(Util.mousePosition()).w != null) {
+            if (c != null){
+                Destroy(c.gameObject);
+            }
+            c = Instantiate(co[0], rt).GetComponent<Card>();
+            weapon = Util.slotAt(Util.mousePositionInt());
+            type = 2;
+            rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 3f/2f);
+        }
+        
+
         if (found) {
-            if (isItem) {
-                setPins(c.atk, item.w.atk);
-                setPins(c.ran, item.w.ran);
-            } else {
-                setPins(c.hp, enemy.hp, enemy.so.hp, new Color(1f, 0f, 0f, 1f), new Color(.25f, 0f, 0f, 1f));
-                setPins(c.def, enemy.so.def);
-                setPins(c.spd, enemy.so.spd);
-                setPins(c.vran, enemy.so.vran);
-                setPins(c.atk, enemy.so.atk);
-                setPins(c.ran, enemy.so.ran);
+            switch (type) {
+                case 0:
+                    setPins(c.atk, item.w.atk);
+                    setPins(c.ran, item.w.ran);
+                    break;
+
+                case 1:
+                    setPins(c.hp, enemy.hp, enemy.so.hp, new Color(1f, 0f, 0f, 1f), new Color(.25f, 0f, 0f, 1f));
+                    setPins(c.def, enemy.so.def);
+                    setPins(c.spd, enemy.so.spd);
+                    setPins(c.vran, enemy.so.vran);
+                    setPins(c.atk, enemy.so.atk);
+                    setPins(c.ran, enemy.so.ran);
+                    break;
+
+                case 2:
+                    setPins(c.atk, weapon.w.atk);
+                    setPins(c.ran, weapon.w.ran);
+                    break;
             }
         }
     }
