@@ -14,6 +14,9 @@ public static class Util {
     public static Vector2 mousePosition() {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
+    public static Vector2 mousePositionInt() {
+        return new Vector2(Mathf.Floor(mousePosition().x), Mathf.Floor(mousePosition().y));
+    }
 
     public static bool mouseInBounds(Vector2 low, Vector2 high) {
         return low.x <= mousePosition().x &&
@@ -32,6 +35,15 @@ public static class Util {
             }
         }
         return false;
+    }
+
+    public static Enemy creatureAt(Vector3 v) {
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (e.t.position == v) {
+                return e;
+            }
+        }
+        return null;
     }
 
     public static Item itemOccupying(Vector3 v) {

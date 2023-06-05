@@ -7,9 +7,9 @@ public class EnemySO : ScriptableObject {
     public Sprite s;
     public int hp;
     public int def;
-    public int atk;
-    public int ran;
     public int spd;
     public int vran;
+    public int atk;
+    public int ran;
     public Sprite atks;
 }
