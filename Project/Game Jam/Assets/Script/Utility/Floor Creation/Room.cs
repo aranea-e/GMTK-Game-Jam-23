@@ -31,12 +31,27 @@ public class Room {
             if (FloorGenerator.isRoomAtCoords(pos + modFromIndex(i))) {
                 doors[i] = FloorGenerator.roomAtCoords(pos + modFromIndex(i)).doors[inverseIndex(i)];
             } else {
-                doors[i] = Random.value >= 0.5;
+                doors[i] = Random.value <= .5f + indexRandMod(i);
                 if (FloorGenerator.lastRound) {
                     doors[i] = false;
                 }
             }
         }
+    }
+
+    float indexRandMod(int index) {
+        switch (index)
+        {
+            case 0:
+                return 0.2f;
+            case 1:
+                return -(pos.x / FloorGenerator.size);
+            case 2:
+                return -0.1f;
+            case 3:
+                return (pos.x / FloorGenerator.size);
+        }
+        return 0;
     }
 
     public void createNewRooms() {

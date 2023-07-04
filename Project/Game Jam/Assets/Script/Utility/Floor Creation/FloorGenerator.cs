@@ -7,8 +7,10 @@ public static class FloorGenerator {
     public static GameObject[] visualizers;
     public static bool doorRoomMade;
     public static bool lastRound;
+    public static int size;
 
     public static void createFloor(int s) {
+        size = s;
         floor = new List<Room>();
         lastRound = false;
         floor.Add(new Room(new Vector2(0, 0), false, true));
@@ -20,7 +22,7 @@ public static class FloorGenerator {
             }
         }
 
-        if (floor.Count < s) {
+        if (floor.Count < s * 2.5) {
             createFloor(s);
         }
     }
