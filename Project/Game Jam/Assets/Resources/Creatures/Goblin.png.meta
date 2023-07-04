@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b1bc86f2ad047534cb44fb47203a3472
+guid: dd4ddd29d609f51419d638610d550f98
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,9 +121,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 10
-        width: 10
-        height: 10
+        y: 11
+        width: 11
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fc9a9c6ed9fe7d498b8aa595e9f0ce4
-      internalID: -363044645
+      spriteID: a6398decd3ed99949aeebf0b18ea8603
+      internalID: 92347187
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: Goblin_1
       rect:
         serializedVersion: 2
-        x: 10
-        y: 10
-        width: 10
-        height: 10
+        x: 11
+        y: 11
+        width: 11
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59d5d79fbf885444e8e4c88be67dcae5
-      internalID: 2056578066
+      spriteID: 11a181905255330459d6b73f4bcf9eb6
+      internalID: 1833523229
       vertices: []
       indices: 
       edges: []
@@ -164,8 +164,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 10
-        height: 10
+        width: 11
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6447a5cc69dc6e745875db2c2c851862
-      internalID: 865043163
+      spriteID: c0329bc94ffa184408ce01af395deeb5
+      internalID: -2108368709
       vertices: []
       indices: 
       edges: []
@@ -183,10 +183,10 @@ TextureImporter:
       name: Goblin_3
       rect:
         serializedVersion: 2
-        x: 10
+        x: 11
         y: 0
-        width: 10
-        height: 10
+        width: 11
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0e9ff86f1a47aa46b6e164d3e826663
-      internalID: 271738251
+      spriteID: 61c959c08461aa941b1257d0163f5ea0
+      internalID: -7098942
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Goblin_0: -363044645
-      Goblin_1: 2056578066
-      Goblin_2: 865043163
-      Goblin_3: 271738251
+      Goblin_0: 92347187
+      Goblin_1: 1833523229
+      Goblin_2: -2108368709
+      Goblin_3: -7098942
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

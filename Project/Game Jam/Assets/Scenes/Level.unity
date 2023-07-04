@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -751,7 +752,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -780,9 +781,22 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 695034798}
+  - {fileID: 1056139446}
   m_Father: {fileID: 2034100925}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c48ea95c8dbf542b3a7e7ea470b001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &601060994
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +993,81 @@ MonoBehaviour:
   - {fileID: 286267092}
   - {fileID: 327615940}
   dsr: {fileID: 1303398107}
+--- !u!1 &1056139445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056139446}
+  - component: {fileID: 1056139448}
+  m_Layer: 0
+  m_Name: Secondary Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056139446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056139445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 519420032}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1056139448
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056139445}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 5
+  m_Depth: -2
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 0
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &1303398105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,10 +1234,10 @@ MonoBehaviour:
   sr: {fileID: 2034100926}
   srt: {fileID: 2034100925}
   s:
-  - {fileID: -469032355, guid: 6687b22300613254890cb88cd4a63032, type: 3}
-  - {fileID: 53735047, guid: 6687b22300613254890cb88cd4a63032, type: 3}
-  - {fileID: -738972592, guid: 6687b22300613254890cb88cd4a63032, type: 3}
-  - {fileID: -391202925, guid: 6687b22300613254890cb88cd4a63032, type: 3}
+  - {fileID: 2136478182, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
+  - {fileID: -1955287693, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
+  - {fileID: 509978589, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
+  - {fileID: 1278930918, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   w: {fileID: 11400000, guid: cabcb7bce90ac6447b80025ef020383b, type: 2}
   mhp: 5
   hp: 5
@@ -1442,6 +1531,22 @@ MonoBehaviour:
   tmps:
   - {fileID: 286267092}
   - {fileID: 327615940}
+  enemies:
+  - {fileID: 2916939831208577105, guid: ee02c641e56e43747b1f2f6223f13791, type: 3}
+  - {fileID: 2663445435963583674, guid: 4bb04a64b21aea9419c8d6142f9f31fb, type: 3}
+  - {fileID: 4270788741993903520, guid: 3fbdac3e953234c479efb4831926b07b, type: 3}
+  enemySprites:
+  - {fileID: 92347187, guid: dd4ddd29d609f51419d638610d550f98, type: 3}
+  - {fileID: -417956243, guid: 711c9de469f335f46bd309b241b5f058, type: 3}
+  - {fileID: -1849021496, guid: 6f9b0f941e4300f4ea23a7a4162221c1, type: 3}
+  items:
+  - {fileID: 11400000, guid: abfacdeda8f443543a7f3c096b26ceea, type: 2}
+  - {fileID: 11400000, guid: e91ba66b2bc0d044c8ca04008699937d, type: 2}
+  - {fileID: 11400000, guid: 0606eb6d7208a604da4e5b1463edce3b, type: 2}
+  itemSprites:
+  - {fileID: -1157388222, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
+  - {fileID: 1270466823, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
+  - {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
 --- !u!1 &2034100924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,12 +1622,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -469032355, guid: 6687b22300613254890cb88cd4a63032, type: 3}
+  m_Sprite: {fileID: 2136478182, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.625, y: 0.625}
+  m_Size: {x: 0.6875, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

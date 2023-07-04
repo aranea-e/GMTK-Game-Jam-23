@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 19a00c2d3f1373749b57c23f25b17893
+guid: 6f9b0f941e4300f4ea23a7a4162221c1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -121,9 +121,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 16
-        height: 16
+        y: 17
+        width: 17
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23e71a1b2344926409b77487cf9b2663
-      internalID: 1798919380
+      spriteID: 80aaf6c14611b2742958cdbfe7ef43b2
+      internalID: -1849021496
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: Ogre_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
+        x: 17
+        y: 17
+        width: 17
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 558c0ddd863cd4745a3499a532a5fd74
-      internalID: -367092125
+      spriteID: e1397d775838bbd4ab236bb2da6ceeac
+      internalID: -1049318828
       vertices: []
       indices: 
       edges: []
@@ -164,8 +164,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 17
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc7870b904b1cc94398280aeaacd9c35
-      internalID: -1546892188
+      spriteID: 01b3444b1d161f4468565b98eb6cb372
+      internalID: -1837259343
       vertices: []
       indices: 
       edges: []
@@ -183,10 +183,10 @@ TextureImporter:
       name: Ogre_3
       rect:
         serializedVersion: 2
-        x: 16
+        x: 17
         y: 0
-        width: 16
-        height: 16
+        width: 17
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcc4d2ef56382114ca822491d9ab24cf
-      internalID: 491806471
+      spriteID: 6ae789d58f1b24540befa372f24f48e2
+      internalID: -1283724423
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ogre_0: 1798919380
-      Ogre_1: -367092125
-      Ogre_2: -1546892188
-      Ogre_3: 491806471
+      Ogre_0: -1849021496
+      Ogre_1: -1049318828
+      Ogre_2: -1837259343
+      Ogre_3: -1283724423
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

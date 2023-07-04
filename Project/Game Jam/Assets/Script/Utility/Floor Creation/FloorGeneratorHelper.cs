@@ -8,6 +8,11 @@ public class FloorGeneratorHelper : MonoBehaviour {
     public int baseSize;
     public TemplateRoomArray[] templates;
     public Tilemap[] tmps;
+
+    public GameObject[] enemies;
+    public Sprite[] enemySprites;
+    public WeaponSO[] items;
+    public Sprite[] itemSprites;
     
 
     void Start() {
@@ -68,6 +73,39 @@ public class FloorGeneratorHelper : MonoBehaviour {
             }
         }
 
+        for (int x = 0; x < 7; x++) {
+            for (int y = 0; y < 7; y++) {
+                if (enemySpawns.GetTile(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0))
+                    != null) {
+                    GameObject e = chooseEnemy(enemySpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)));
+                    Instantiate(e, new Vector2(x + origin.x, y + origin.y), Quaternion.identity);
+                }
+            }
+        }
+
         Destroy(template);
+    }
+
+    GameObject chooseEnemy(Tile t) {
+        if (t.sprite = null) {
+            return null;
+        }
+
+        for (int i = 0; i < enemies.Length; i++) {
+            if (enemySprites[i] == t.sprite) {
+                return enemies[i];
+            }
+        }
+        
+        foreach (GameObject enemy in enemies) {
+            if (RandPercent(67f)) {
+                return enemy;
+            }
+        }
+        return enemies[enemies.Length - 1];
+    }
+
+    bool RandPercent(float percent) {
+        return Random.value <= (percent / 100f);
     }
 }

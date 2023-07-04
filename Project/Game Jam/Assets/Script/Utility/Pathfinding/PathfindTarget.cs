@@ -33,7 +33,7 @@ public class PathfindTarget {
             }
         }
         foreach (PathfindTarget p in createdPTs) {
-            if (p != null) {
+            if (p != null && p.distance < Pathfind.targetRange + 1) {
                 p.pathfindFromTarget();
             }
         }

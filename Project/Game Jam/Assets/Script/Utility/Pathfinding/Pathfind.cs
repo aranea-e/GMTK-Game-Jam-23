@@ -8,8 +8,14 @@ public static class Pathfind {
     public static Vector3 target;
     public static Enemy current;
     public static int distance;
+    public static int targetRange;
 
     public static Vector3 pathfind(Vector3 s, Vector3 t, int spd, int vran, int ran, Enemy c, bool attack) {
+        if (Vector3.Distance(s, t) > vran) {
+            return s;
+        }
+
+        targetRange = vran;
         target = t;
         current = c;
         pts = new List<PathfindTarget>();
