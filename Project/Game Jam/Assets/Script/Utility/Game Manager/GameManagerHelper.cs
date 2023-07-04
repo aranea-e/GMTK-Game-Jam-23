@@ -10,9 +10,11 @@ public class GameManagerHelper : MonoBehaviour {
     [SerializeField] Tilemap[] world;
     [SerializeField] LayerMask lm;
     [SerializeField] bool ii;
+    [SerializeField] WeaponSO[] bweapons;
+    [SerializeField] WeaponSO[] weapons;
 
     void Awake() {
-        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm, ii);
+        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons);
     }
 
     void Start() {

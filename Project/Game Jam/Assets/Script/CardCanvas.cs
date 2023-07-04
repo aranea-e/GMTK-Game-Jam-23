@@ -55,8 +55,8 @@ public class CardCanvas : MonoBehaviour {
         if (found) {
             switch (type) {
                 case 0:
-                    setPins(c.atk, item.w.atk);
-                    setPins(c.ran, item.w.ran);
+                    setPins(c.atk, item.w.atk + (int) item.mods.x);
+                    setPins(c.ran, item.w.ran + (int) item.mods.y);
                     break;
 
                 case 1:

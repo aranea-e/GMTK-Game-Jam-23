@@ -12,14 +12,27 @@ public static class GameManager {
     public static LayerMask wallLM;
     public static float timer;
     public static bool infiniteInven;
+    public static WeaponSO[] baseWeaponSOs;
+    public static WeaponSO[] weaponSOs;
 
-    public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, LayerMask lm, bool ii) {
+    public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, 
+                             LayerMask lm, bool ii, WeaponSO[] bweapons, WeaponSO[] weapons) {
         targets = t;
         targetPrefab = tp;
         attackPrefab = ap;
         world = tmps;
         wallLM = lm;
         infiniteInven = ii;
+        baseWeaponSOs = bweapons;
+        weaponSOs = weapons;
+        revertWeapons();
+    }
+
+    public static void revertWeapons() {
+        for (int i = 0; i < baseWeaponSOs.Length; i++) {
+            weaponSOs[i].atk = baseWeaponSOs[i].atk;
+            weaponSOs[i].ran = baseWeaponSOs[i].ran;
+        }
     }
 
     public static void start() {

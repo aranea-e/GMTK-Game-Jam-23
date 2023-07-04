@@ -58,12 +58,24 @@ public class Player : MonoBehaviour {
             if (Util.itemOccupying(v).invenSlot) {
                 inven.addSlot();
                 Destroy(Util.itemOccupying(v).gameObject);
-            } else if (!inven.changeSlot(Util.itemOccupying(v).w)) {
+            } else if (inven.contains(Util.itemOccupying(v).w) != -1) {
+                if (Util.itemOccupying(v).mods.x > 0 || Util.itemOccupying(v).mods.y > 0) {
+                    Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
+                    Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
+                    inven.changeSlot(inven.contains(Util.itemOccupying(v).w), Util.itemOccupying(v).w);
+                    Destroy(Util.itemOccupying(v).gameObject);
+                }
+            } else if (inven.isFull()) {
                 if (GameManager.infiniteInven) {
+                    Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
+                    Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
                     inven.addSlot(Util.itemOccupying(v).w);
                     Destroy(Util.itemOccupying(v).gameObject);
                 }
             } else {
+                Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
+                Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
+                inven.changeSlot(Util.itemOccupying(v).w);
                 Destroy(Util.itemOccupying(v).gameObject);
             }
         }

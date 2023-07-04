@@ -5,6 +5,7 @@ public class Item : MonoBehaviour {
     public Transform t;
     public SpriteRenderer s;
     public bool invenSlot;
+    public Vector2 mods;
 
     void Awake() {
         if (!invenSlot) {

@@ -76,4 +76,22 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
+
+    public bool isFull() {
+        foreach (GameObject slot in slots) {
+            if (slot.GetComponent<Weapon>().w == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int contains(WeaponSO w) {
+        for (int i = 0; i < slots.Count; i++) {
+            if (slots[i].GetComponent<Weapon>().w == w) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
