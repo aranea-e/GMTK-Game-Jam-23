@@ -73,10 +73,11 @@ public class FloorGeneratorHelper : MonoBehaviour {
             }
         }
 
+        enemySpawns.RefreshAllTiles();
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                if (enemySpawns.GetTile(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0))
-                    != null) {
+                if (enemySpawns.GetTile(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)) != null &&
+                    enemySpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)).sprite != null ) {
                     GameObject e = chooseEnemy(enemySpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)));
                     Instantiate(e, new Vector2(x + origin.x, y + origin.y), Quaternion.identity);
                 }
@@ -87,7 +88,7 @@ public class FloorGeneratorHelper : MonoBehaviour {
     }
 
     GameObject chooseEnemy(Tile t) {
-        if (t.sprite = null) {
+        if (t.sprite == null) {
             return null;
         }
 
@@ -97,10 +98,12 @@ public class FloorGeneratorHelper : MonoBehaviour {
             }
         }
         
+        float j = 1f;
         foreach (GameObject enemy in enemies) {
-            if (RandPercent(67f)) {
+            if (RandPercent(((j*j)/(j*j+1f))*100f)) {
                 return enemy;
             }
+            j += 2.5f;
         }
         return enemies[enemies.Length - 1];
     }
