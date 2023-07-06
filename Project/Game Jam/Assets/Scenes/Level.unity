@@ -1527,6 +1527,8 @@ MonoBehaviour:
   - {fileID: 1901322881630730127, guid: 259ff9c6ab93ab049a187353cfcb2e70, type: 3}
   - {fileID: 1901322881630730127, guid: 236c4781bbe71fb45b0f40aff71c6697, type: 3}
   baseSize: 5
+  roomNumber: 0
+  roomCount: 0
   templates:
   - name: Door
     rooms:

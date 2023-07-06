@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 public class FloorGeneratorHelper : MonoBehaviour {
     public GameObject[] visualizers;
     public int baseSize;
+    public int roomNumber;
+    public int roomCount;
     public TemplateRoomArray[] templates;
     public Tilemap[] tmps;
 
@@ -29,7 +31,9 @@ public class FloorGeneratorHelper : MonoBehaviour {
     }
 
     void Generate() {
+        roomCount = FloorGenerator.floor.Count;
         for (int i = 0; i < FloorGenerator.floor.Count; i++) {
+            roomNumber = i;
             string name = "";
             if (FloorGenerator.floor[i].doors[0]) { name += "North"; }
             if (FloorGenerator.floor[i].doors[1]) { name += "East"; }
@@ -82,7 +86,7 @@ public class FloorGeneratorHelper : MonoBehaviour {
                 if (enemySpawns.GetTile(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)) != null &&
                     enemySpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)).sprite != null ) {
                     GameObject e = chooseEnemy(enemySpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)));
-                    Instantiate(e, new Vector2(x + origin.x, y + origin.y), Quaternion.identity);
+                    Instantiate(e, new Vector2(x + origin.x, y + origin.y), Quaternion.identity).GetComponent<Enemy>().setFGHVals(baseSize, roomNumber, roomCount);
                 }
             }
         }

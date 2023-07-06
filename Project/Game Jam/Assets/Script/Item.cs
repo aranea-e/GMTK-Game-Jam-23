@@ -22,4 +22,14 @@ public class Item : MonoBehaviour {
         this.invenSlot = invenSlot;
         Awake();
     }
+
+    public void updateMods() {
+        if (w.atk + mods.x > 9) {
+            mods.x = 9 - w.atk;
+        }
+
+        if (w.ran + mods.y > 7) {
+            mods.y = 7 - w.ran;
+        }
+    }
 }

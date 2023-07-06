@@ -45,7 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d241b886a1c99324ba7153f501671594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  so: {fileID: 11400000, guid: b83b0449fa889874fa05e42051a5f773, type: 2}
+  so:
+    s: {fileID: 0}
+    hp: 0
+    def: 0
+    spd: 0
+    vran: 0
+    atk: 0
+    ran: 0
+    atks: {fileID: 0}
+  soBase: {fileID: 11400000, guid: b83b0449fa889874fa05e42051a5f773, type: 2}
   t: {fileID: 2663445435963583676}
   srt: {fileID: 2663445436365394006}
   sr: {fileID: 2663445436365394007}
