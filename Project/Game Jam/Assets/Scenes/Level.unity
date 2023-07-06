@@ -123,6 +123,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &67465572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67465573}
+  - component: {fileID: 67465574}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &67465573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67465572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &67465574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67465572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ead4901d2879e46bbabef93afbf208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: music
+    clip: {fileID: 8300000, guid: 486c3d18b641409419ac984fd072dca7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
 --- !u!1 &286267089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1290,7 @@ MonoBehaviour:
   - {fileID: -1955287693, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   - {fileID: 509978589, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   - {fileID: 1278930918, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
-  w: {fileID: 11400000, guid: bf88cb1edee176b4c97acb39f9cc0672, type: 2}
+  w: {fileID: 11400000, guid: cabcb7bce90ac6447b80025ef020383b, type: 2}
   mhp: 5
   hp: 5
   hpbar: {fileID: 601060995}
@@ -1541,13 +1592,14 @@ MonoBehaviour:
   - {fileID: -417956243, guid: 711c9de469f335f46bd309b241b5f058, type: 3}
   - {fileID: -1849021496, guid: 6f9b0f941e4300f4ea23a7a4162221c1, type: 3}
   items:
+  - {fileID: 11400000, guid: 0606eb6d7208a604da4e5b1463edce3b, type: 2}
   - {fileID: 11400000, guid: abfacdeda8f443543a7f3c096b26ceea, type: 2}
   - {fileID: 11400000, guid: e91ba66b2bc0d044c8ca04008699937d, type: 2}
-  - {fileID: 11400000, guid: 0606eb6d7208a604da4e5b1463edce3b, type: 2}
   itemSprites:
+  - {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
   - {fileID: -1157388222, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
   - {fileID: 1270466823, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
-  - {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
+  weaponPrefab: {fileID: 8138106003839448952, guid: 722e233d7580e9b4485b800ee127736d, type: 3}
 --- !u!1 &1725652605
 GameObject:
   m_ObjectHideFlags: 0

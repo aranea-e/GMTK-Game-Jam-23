@@ -16,11 +16,7 @@ public class Inventory : MonoBehaviour {
                                                         transform.position.y, 0f);
             Vector2 low = new Vector2(slots[i].transform.position.x - 0.5f, slots[i].transform.position.y - 0.5f);
             Vector2 high = new Vector2(slots[i].transform.position.x + 0.5f, slots[i].transform.position.y + 0.5f);
-            if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high) && GameManager.timer >= 1) {
-                if (Util.getP().w != slots[i].GetComponent<Weapon>().w) {
-                    GameManager.onPlayerAction();
-                    GameManager.timer += .5f;
-                }
+            if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
                 Util.getP().w = slots[i].GetComponent<Weapon>().w;
             }
             if (slots[i].GetComponent<Weapon>().w != null && Util.getP().w == slots[i].GetComponent<Weapon>().w) {

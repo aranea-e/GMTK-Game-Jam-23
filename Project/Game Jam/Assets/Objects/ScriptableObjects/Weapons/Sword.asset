@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6caf786bc7743144487c5313f2b196e0, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  ran: 5
-  atk: 2
+  ran: 1
+  atk: 4
   s: {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

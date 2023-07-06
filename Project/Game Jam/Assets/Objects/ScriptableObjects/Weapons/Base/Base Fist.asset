@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Base Fist
   m_EditorClassIdentifier: 
   ran: 1
-  atk: 1
+  atk: 2
   s: {fileID: 1174084628, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

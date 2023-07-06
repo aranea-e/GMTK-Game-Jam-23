@@ -49,6 +49,8 @@ MonoBehaviour:
   t: {fileID: 9201593731119584514}
   s: {fileID: 664567165607117863}
   invenSlot: 0
+  mods: {x: 0, y: 0}
+  iSprite: {fileID: 21300000, guid: 021632a7efac7da4186429453202eb18, type: 3}
 --- !u!1 &9143492687559281916
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class FloorGeneratorHelper : MonoBehaviour {
     public Sprite[] enemySprites;
     public WeaponSO[] items;
     public Sprite[] itemSprites;
+
+    public GameObject weaponPrefab;
     
 
     void Start() {
@@ -84,14 +86,23 @@ public class FloorGeneratorHelper : MonoBehaviour {
             }
         }
 
+        equipSpawns.RefreshAllTiles();
+        for (int x = 0; x < 7; x++) {
+            for (int y = 0; y < 7; y++) {
+                if (equipSpawns.GetTile(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)) != null &&
+                    equipSpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)).sprite != null ) {
+                    WeaponSO w = chooseWeapon(equipSpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)));
+                    Vector2 mods = new Vector2((Random.Range(0, 5) / 2), (Random.Range(0, 5) / 2));
+                    if (w.ran == 1) { mods.y = 0f; }
+                    Instantiate(weaponPrefab, new Vector2(x + origin.x, y + origin.y), Quaternion.identity).GetComponent<Item>().setup(w, mods, false);
+                }
+            }
+        }
+
         Destroy(template);
     }
 
     GameObject chooseEnemy(Tile t) {
-        if (t.sprite == null) {
-            return null;
-        }
-
         for (int i = 0; i < enemies.Length; i++) {
             if (enemySprites[i] == t.sprite) {
                 return enemies[i];
@@ -106,6 +117,21 @@ public class FloorGeneratorHelper : MonoBehaviour {
             j += 2.5f;
         }
         return enemies[enemies.Length - 1];
+    }
+
+    WeaponSO chooseWeapon(Tile t) {
+        for (int i = 0; i < items.Length; i++) {
+            if (itemSprites[i] == t.sprite) {
+                return items[i];
+            }
+        }
+        
+        foreach (WeaponSO weapon in items) {
+            if (RandPercent(5f)) {
+                return weapon;
+            }
+        }
+        return items[items.Length - 1];
     }
 
     bool RandPercent(float percent) {

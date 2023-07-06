@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Base Sword
   m_EditorClassIdentifier: 
   ran: 1
-  atk: 6
+  atk: 4
   s: {fileID: 1945824139, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
