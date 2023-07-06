@@ -15,7 +15,7 @@ public class FloorGeneratorHelper : MonoBehaviour {
     public Sprite[] itemSprites;
 
     public GameObject weaponPrefab;
-    
+    public GameObject door;
 
     void Start() {
         FloorGenerator.visualizers = visualizers;
@@ -42,13 +42,14 @@ public class FloorGeneratorHelper : MonoBehaviour {
             for (int j = 0; j < templates.Length; j++) {
                 if (templates[j].name == name) {
                     FloorGenerator.floor[i].template = templates[j].fetchRoom();
-                    placeRoom(FloorGenerator.floor[i].pos, FloorGenerator.floor[i].template);
+                    placeRoom(FloorGenerator.floor[i].pos, FloorGenerator.floor[i].template, 
+                              FloorGenerator.floor[i].startOrEnd == 1, FloorGenerator.floor[i].startOrEnd == 2);
                 }
             }
         }
     }
 
-    void placeRoom(Vector2 coords, GameObject template) {
+    void placeRoom(Vector2 coords, GameObject template, bool isStart, bool isDoor) {
         template = Instantiate(template);
         
         Tilemap enemySpawns = template.GetComponent<TemplateTilemapHandler>().tmps[0];
@@ -94,9 +95,14 @@ public class FloorGeneratorHelper : MonoBehaviour {
                     WeaponSO w = chooseWeapon(equipSpawns.GetTile<Tile>(new Vector3Int(x + (int) templateOrigin.x, y + (int) templateOrigin.y, 0)));
                     Vector2 mods = new Vector2((Random.Range(0, 5) / 2), (Random.Range(0, 5) / 2));
                     if (w.ran == 1) { mods.y = 0f; }
+                    if (isStart) { mods.x = 0f; mods.y = 0f; }
                     Instantiate(weaponPrefab, new Vector2(x + origin.x, y + origin.y), Quaternion.identity).GetComponent<Item>().setup(w, mods, false);
                 }
             }
+        }
+
+        if (isDoor) {
+            door.transform.position = new Vector3(origin.x + 3, origin.y + 3);
         }
 
         Destroy(template);

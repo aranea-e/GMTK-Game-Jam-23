@@ -1600,6 +1600,7 @@ MonoBehaviour:
   - {fileID: -1157388222, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
   - {fileID: 1270466823, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
   weaponPrefab: {fileID: 8138106003839448952, guid: 722e233d7580e9b4485b800ee127736d, type: 3}
+  door: {fileID: 1305622803}
 --- !u!1 &1725652605
 GameObject:
   m_ObjectHideFlags: 0

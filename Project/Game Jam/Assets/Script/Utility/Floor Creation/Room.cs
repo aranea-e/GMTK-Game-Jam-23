@@ -9,15 +9,11 @@ public class Room {
     public Vector2 pos;
     public int startOrEnd;
 
-    public Room(Vector2 pos, bool doorRoom, bool firstRoom) {
+    public Room(Vector2 pos, bool firstRoom) {
         this.pos = pos;
         if (firstRoom) {
             startOrEnd = 1;
             bool[] doors = {true, false, false, false};
-            this.doors = doors;
-        } else if (doorRoom) {
-            startOrEnd = 2;
-            bool[] doors = {false, false, true, false};
             this.doors = doors;
         } else {
             startOrEnd = 0;
@@ -37,6 +33,7 @@ public class Room {
                 }
             }
         }
+        checkIfDoor();
     }
 
     float indexRandMod(int index) {
@@ -57,7 +54,7 @@ public class Room {
     public void createNewRooms() {
         for (int i = 0; i < 4; i++) {
             if (!FloorGenerator.isRoomAtCoords(pos + modFromIndex(i)) && doors[i]) {
-                FloorGenerator.floor.Add(new Room(pos + modFromIndex(i), false, false));
+                FloorGenerator.floor.Add(new Room(pos + modFromIndex(i), false));
             }
         }
     }
@@ -88,6 +85,14 @@ public class Room {
                 return 1;
         }
         return -1;
+    }
+
+    public void checkIfDoor() {
+        if (!FloorGenerator.doorRoomMade &&
+            !doors[0] && !doors[1] && doors[2] && !doors[3]) {
+            startOrEnd = 2;
+            FloorGenerator.doorRoomMade = true;
+        }
     }
 
     public override string ToString() {

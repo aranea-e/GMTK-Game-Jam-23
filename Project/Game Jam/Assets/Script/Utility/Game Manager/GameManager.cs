@@ -49,6 +49,7 @@ public static class GameManager {
     }
 
     public static void createMoveTargets() {
+        destroyAllTargets();
         targetInstances = new List<Target>();
         Vector3[] coords = {new Vector3(Util.getP().t.position.x + 1, Util.getP().t.position.y, 0),
                             new Vector3(Util.getP().t.position.x - 1, Util.getP().t.position.y, 0),
@@ -61,7 +62,7 @@ public static class GameManager {
         }
 
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
-            if (Util.lineOfSight(Util.getP().t.position, e.t.position)
+            if (Util.cornerLineOfSight(Util.getP().t.position, e.t.position)
                 && Pathfind.pathfind(e.t.position, Util.getP().t.position, e.so.spd, 
                                      Util.getP().w.ran, Util.getP().w.ran, e, false) != e.t.position) {
                 instantiateTarget(targets[1], targetPrefab, e.t.position);

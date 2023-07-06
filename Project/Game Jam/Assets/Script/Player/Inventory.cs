@@ -18,6 +18,7 @@ public class Inventory : MonoBehaviour {
             Vector2 high = new Vector2(slots[i].transform.position.x + 0.5f, slots[i].transform.position.y + 0.5f);
             if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
                 Util.getP().w = slots[i].GetComponent<Weapon>().w;
+                GameManager.createMoveTargets();
             }
             if (slots[i].GetComponent<Weapon>().w != null && Util.getP().w == slots[i].GetComponent<Weapon>().w) {
                 slots[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, .8f, .65f);

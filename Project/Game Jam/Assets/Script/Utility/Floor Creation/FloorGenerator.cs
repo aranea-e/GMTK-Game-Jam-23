@@ -13,7 +13,8 @@ public static class FloorGenerator {
         size = s;
         floor = new List<Room>();
         lastRound = false;
-        floor.Add(new Room(new Vector2(0, 0), false, true));
+        doorRoomMade = false;
+        floor.Add(new Room(new Vector2(0, 0), true));
         for (int i = 0; i < s; i++) {
             lastRound = (i == s - 1);
             int count = floor.Count;
@@ -22,9 +23,18 @@ public static class FloorGenerator {
             }
         }
 
-        if (floor.Count < s * 2.5) {
+        if (floor.Count < s * 2.5 || !findDoor()) {
             createFloor(s);
         }
+    }
+
+    static bool findDoor() {
+        for (int i = 0; i < floor.Count; i++) {
+            if (floor[i].startOrEnd == 2) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static string FGDebug() {

@@ -45,7 +45,7 @@ public static class Pathfind {
             return s;
         }
 
-        if (distance - 1 < ran && Util.lineOfSight(s, t)) {
+        if (distance - 1 < ran && Util.cornerLineOfSight(s, t)) {
             if (attack && current.hp > 0) {
                 current.attack(target);
             } else {
