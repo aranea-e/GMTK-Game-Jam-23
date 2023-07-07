@@ -14,9 +14,7 @@ public class Target : MonoBehaviour {
                              (Mathf.Cos(timeSinceSpawn * 2f) + 5/3f) * 0.375f);
         Vector2 low = new Vector2(t.position.x, t.position.y);
         Vector2 high = new Vector2(t.position.x + 1f, t.position.y + 1f);
-        Vector2[] skipBounds = FindObjectOfType<Skip>().findBounds();
-        if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)
-            && !Util.mouseInBounds(skipBounds[0], skipBounds[1])) {
+        if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
             onClick();
         }
     }

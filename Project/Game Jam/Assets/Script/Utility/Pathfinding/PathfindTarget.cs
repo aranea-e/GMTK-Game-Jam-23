@@ -22,11 +22,15 @@ public class PathfindTarget {
         for (int i = 0; i < 4; i++) {
             if (Pathfind.coords.Contains(coords[i])) {
                 createdPTs[i] = replaceTarget(coords[i]);
-            } else if (Util.tileAvailable(coords[i])) {
+            } else if (Util.tileAvailable(coords[i]) || (Util.tileAvailableIgnoreEnemies(coords[i]) && Pathfind.ignoreEnemies)) {
                 createdPTs[i] = new PathfindTarget(coords[i], this, distance + 1);
                 Pathfind.coords.Add(coords[i]);
                 Pathfind.pts.Add(createdPTs[i]);
-            } else if (Util.creatureOccupying(coords[i]) && (coords[i] == Pathfind.current.t.position)) {
+            } else if (Pathfind.current != null && Util.creatureOccupying(coords[i]) && (coords[i] == Pathfind.current.t.position)) {
+                createdPTs[i] = new PathfindTarget(coords[i], this, distance + 1);
+                Pathfind.coords.Add(coords[i]);
+                Pathfind.pts.Add(createdPTs[i]);
+            } else if (Pathfind.current == null && (coords[i] == Util.getP().t.position)) {
                 createdPTs[i] = new PathfindTarget(coords[i], this, distance + 1);
                 Pathfind.coords.Add(coords[i]);
                 Pathfind.pts.Add(createdPTs[i]);

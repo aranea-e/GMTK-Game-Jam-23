@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    public string target;
+    public bool testing;
+
     public Transform t;
     [SerializeField] Transform door;
     [SerializeField] SpriteRenderer sr;
@@ -28,14 +31,17 @@ public class Player : MonoBehaviour {
 
     public void Update() {
         GameManager.timer += Time.deltaTime;
+        GameManager.moveTimer += Time.deltaTime;
+
+        if (GameManager.moveTimer >= GameManager.moveInterval) {
+            GameManager.moveTimer = 0f;
+            determineTarget();
+            move(playerPathfind());
+        }
+
         if (GameManager.timer >= 1f || (GameManager.timer >= .5f && !Util.enemiesMoving())) {
             GameManager.timer = 1f;
             hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
-            if (GameManager.targetInstances == null) {
-                GameManager.createMoveTargets();
-            }
-        } else {
-            GameManager.destroyAllTargets();
         }
         
         if (GameManager.timer < 0.5f) {
@@ -45,6 +51,46 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void determineTarget() {
+        if (t.position == ((Util.getD().position - new Vector3(0, 1, 0)))) {
+            target = "enterDoor";
+            return;
+        }
+
+        if (Pathfind.pathfind(t.position, Util.getD().position, 1, 4, 0, null, false, false) != t.position 
+            && !GameManager.isEnemyInSight(3)) {
+            target = "moveToDoor";
+            return;
+        }
+
+        if (GameManager.isEnemyInSight(4)) {
+            target = "attackEnemy";
+            return;
+        }
+
+        if (GameManager.isItemInSight(25)) {
+            target = "retrieveItem";
+            return;
+        }
+
+        if (GameManager.isEnemyInSight(7)) {
+            target = "attackEnemy";
+            return;
+        }
+
+        if (GameManager.isEnemy(25)) {
+            target = "attackEnemy";
+            return;
+        }
+
+        if (GameManager.isItem(15)) {
+            target = "retrieveItem";
+            return;
+        }
+
+        target = "wander";
+    }
+
     public void setPos(Vector2 v) {
         last = t.position;
         t.position = new Vector3(v.x, v.y, 0f);
@@ -52,7 +98,7 @@ public class Player : MonoBehaviour {
 
     public void move(Vector2 v) {
         if (Util.isDoor(v)) {
-            Debug.Log("u win!!1!");
+            Debug.Log("u lose :(");
         }
         if (Util.itemOccupying(v) != null) {
             if (Util.itemOccupying(v).invenSlot) {
@@ -82,6 +128,8 @@ public class Player : MonoBehaviour {
         Util.face(t.position, v, sr, s);
         setPos(v);
         Util.moveSprite(srt, last, t.position, 0f);
+
+        GameManager.onPlayerAction();
     }
 
     public void attack(Vector2 v) {
@@ -98,8 +146,51 @@ public class Player : MonoBehaviour {
     public void damage(int damage) {
         hp -= damage;
         if (hp <= 0) {
-            Debug.Log("L bozo");
+            Debug.Log("ded");
             hp = 0;
         }
+    }
+
+    public Vector2 playerPathfind() {
+        Vector2 result = new Vector2();
+
+        switch (target) {
+            
+            case "enterDoor":
+                result = Util.getD().position;
+                break;
+            
+            case "attackEnemy":
+            inven.updateInven();
+                if (GameManager.isEnemyInSight(7)) {
+                    result = Pathfind.pathfind(t.position, GameManager.closestEnemyInSight().t.position, 1, 15, w.ran, null, true, false);
+                } else {
+                    result = Pathfind.pathfind(t.position, GameManager.closestEnemy().t.position, 1, 25, 0, null, false, false);
+                    if (result == (Vector2) t.position) {
+                        target = "moveToDoor";
+                        result = playerPathfind();
+                    }
+                }
+                break;
+
+            case "retrieveItem":
+                if (GameManager.isItemInSight(25)) {
+                    result = Pathfind.pathfind(t.position, GameManager.closestItemInSight().t.position, 1, 25, 0, null, false, false);
+                } else {
+                    result = Pathfind.pathfind(t.position, GameManager.closestItem().t.position, 1, 25, 0, null, false, false);
+                }
+                if (result == (Vector2) t.position) {
+                    target = "moveToDoor";
+                    result = playerPathfind();
+                }
+                break;
+
+            case "moveToDoor":
+            default:
+                result = Pathfind.pathfind(t.position, Util.getD().position, 1, 9999, 0, null, false, true);
+                break;
+        }
+
+        return result;
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public EnemySOModded so;
     public EnemySO soBase;
+    public OptionSO currentOption;
+    public SpriteRenderer optionSprite;
     public Transform t;
     public Transform srt;
     public SpriteRenderer sr;
@@ -33,6 +35,7 @@ public class Enemy : MonoBehaviour {
             Util.moveSprite(srt, last, t.position, 0f);
         }
         hpbar.localScale = new Vector3((hp/(float) so.hp) * (10/16f), (2/16f), 1);
+        optionSprite.sprite = currentOption.s;
     }
 
     public void setFGHVals(int baseSize, int roomNumber, int roomCount) {
@@ -42,7 +45,7 @@ public class Enemy : MonoBehaviour {
     }
     
     public void pathfind() {
-        moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran, this, true));
+        moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran, this, true, false));
     }
 
     void moveTo(Vector3 p) {

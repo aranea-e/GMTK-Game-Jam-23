@@ -12,13 +12,17 @@ public class GameManagerHelper : MonoBehaviour {
     [SerializeField] bool ii;
     [SerializeField] WeaponSO[] bweapons;
     [SerializeField] WeaponSO[] weapons;
+    [SerializeField] float moveInterval;
 
     void Awake() {
-        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons);
+        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons, moveInterval);
     }
 
     void Start() {
         GameManager.start();
-        Destroy(gameObject);
+    }
+
+    void Update() {
+        GameManager.moveInterval = moveInterval;
     }
 }

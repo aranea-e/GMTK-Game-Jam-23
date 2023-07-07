@@ -14,9 +14,12 @@ public static class GameManager {
     public static bool infiniteInven;
     public static WeaponSO[] baseWeaponSOs;
     public static WeaponSO[] weaponSOs;
+    public static float moveInterval;
+    public static float moveTimer;
 
     public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, 
-                             LayerMask lm, bool ii, WeaponSO[] bweapons, WeaponSO[] weapons) {
+                             LayerMask lm, bool ii, WeaponSO[] bweapons, WeaponSO[] weapons,
+                             float mI) {
         targets = t;
         targetPrefab = tp;
         attackPrefab = ap;
@@ -25,6 +28,7 @@ public static class GameManager {
         infiniteInven = ii;
         baseWeaponSOs = bweapons;
         weaponSOs = weapons;
+        moveInterval = mI;
         revertWeapons();
     }
 
@@ -41,11 +45,13 @@ public static class GameManager {
 
     public static void onPlayerAction() {
         timer = 0f;
+        if (Util.getP().testing) {
+            return;
+        }
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
             e.pathfind();
             e.Update();
         }
-        destroyAllTargets();
     }
 
     public static void createMoveTargets() {
@@ -62,13 +68,103 @@ public static class GameManager {
         }
 
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
-            if (Util.cornerLineOfSight(Util.getP().t.position, e.t.position)
-                && Pathfind.pathfind(e.t.position, Util.getP().t.position, e.so.spd, 
-                                     Util.getP().w.ran, Util.getP().w.ran, e, false) != e.t.position) {
+            if (Util.lineOfSight(Util.getP().t.position, e.t.position)) {
                 instantiateTarget(targets[1], targetPrefab, e.t.position);
             }
         }
     }
+
+    #region enemy checks
+    public static bool isEnemyInSight(float range) {
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (Util.lineOfSight(Util.getP().t.position, e.t.position)
+                && Vector3.Distance(Util.getP().t.position, e.t.position) <= range) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static bool isEnemy(float range) {
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (Vector3.Distance(Util.getP().t.position, e.t.position) <= range) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Enemy closestEnemyInSight() {
+        Enemy result = null;
+        float distance = -1f;
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (Util.lineOfSight(Util.getP().t.position, e.t.position)
+                && (Vector3.Distance(Util.getP().t.position, e.t.position) < distance || distance == -1f)) {
+                distance = Vector3.Distance(Util.getP().t.position, e.t.position);
+                result = e;
+            }
+        }
+        return result;
+    }
+
+    public static Enemy closestEnemy() {
+        Enemy result = null;
+        float distance = -1f;
+        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
+            if (Vector3.Distance(Util.getP().t.position, e.t.position) < distance || distance == -1f) {
+                distance = Vector3.Distance(Util.getP().t.position, e.t.position);
+                result = e;
+            }
+        }
+        return result;
+    }
+    #endregion
+
+    #region item checks
+    public static bool isItemInSight(float range) {
+        foreach (Item i in Object.FindObjectsOfType<Item>()) {
+            if (Util.lineOfSight(Util.getP().t.position, i.t.position)
+                && Vector3.Distance(Util.getP().t.position, i.t.position) <= range) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static bool isItem(float range) {
+        foreach (Item i in Object.FindObjectsOfType<Item>()) {
+            if (Vector3.Distance(Util.getP().t.position, i.t.position) <= range) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Item closestItemInSight() {
+        Item result = null;
+        float distance = -1f;
+        foreach (Item i in Object.FindObjectsOfType<Item>()) {
+            if (Util.lineOfSight(Util.getP().t.position, i.t.position)
+                && (Vector3.Distance(Util.getP().t.position, i.t.position) < distance || distance == -1f)) {
+                distance = Vector3.Distance(Util.getP().t.position, i.t.position);
+                result = i;
+            }
+        }
+        return result;
+    }
+
+    public static Item closestItem() {
+        Item result = null;
+        float distance = -1f;
+        foreach (Item i in Object.FindObjectsOfType<Item>()) {
+            if (Vector3.Distance(Util.getP().t.position, i.t.position) < distance || distance == -1f) {
+                distance = Vector3.Distance(Util.getP().t.position, i.t.position);
+                result = i;
+            }
+        }
+        return result;
+    }
+    #endregion
 
     static void instantiateTarget(TargetSO so, GameObject p, Vector3 pos) {
         targetInstances.Add(Object.Instantiate(p, pos, Quaternion.identity).GetComponent<Target>());

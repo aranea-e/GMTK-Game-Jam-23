@@ -5,27 +5,32 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
     public List<GameObject> slots;
     [SerializeField] GameObject slotPF;
-    
-    void Awake() {
-        slots = new List<GameObject>();
+    [SerializeField] WeaponSO fistSO;
+
+    public void updateInven() {
+        if (GameManager.isEnemyInSight(7)) {
+            Util.getP().w = chooseWeapon(GameManager.closestEnemyInSight().so.def);
+        }
     }
 
-    void Update() {
+    public WeaponSO chooseWeapon(int def) {
+        List<WeaponSO> available = new List<WeaponSO>();
         for (int i = 0; i < slots.Count; i++) {
-            slots[i].transform.position = new Vector3(-(slots.Count - 1f) * 10f/16f + i * 20f/16f + transform.position.x, 
-                                                        transform.position.y, 0f);
-            Vector2 low = new Vector2(slots[i].transform.position.x - 0.5f, slots[i].transform.position.y - 0.5f);
-            Vector2 high = new Vector2(slots[i].transform.position.x + 0.5f, slots[i].transform.position.y + 0.5f);
-            if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
-                Util.getP().w = slots[i].GetComponent<Weapon>().w;
-                GameManager.createMoveTargets();
-            }
-            if (slots[i].GetComponent<Weapon>().w != null && Util.getP().w == slots[i].GetComponent<Weapon>().w) {
-                slots[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, .8f, .65f);
-            } else {
-                slots[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
+            if (Pathfind.isInRange(Util.getP().t.position, GameManager.closestEnemyInSight().t.position, slots[i].GetComponent<Weapon>().w.ran) 
+                && slots[i].GetComponent<Weapon>().w.atk > def){
+                available.Add(slots[i].GetComponent<Weapon>().w);
             }
         }
+
+        if (available.Count == 0) { return fistSO; }
+
+        int result = 0;
+        for (int i = 0; i < available.Count; i++) {
+            if (available[i].atk > available[result].atk) {
+                result = i;
+            }
+        }
+        return available[result];
     }
 
     public Weapon slotAt(Vector2 v) {
@@ -46,7 +51,6 @@ public class Inventory : MonoBehaviour {
         slots[slots.Count - 1].transform.parent = gameObject.transform;
         slots[slots.Count - 1].GetComponent<Weapon>().w = w;
         slots[slots.Count - 1].GetComponent<Weapon>().s.sprite = w.s;
-        Update();
     }
 
     [ContextMenu("add slot")]
@@ -54,7 +58,6 @@ public class Inventory : MonoBehaviour {
         slots.Add(Instantiate(slotPF, gameObject.transform.position, Quaternion.identity));
         slots[slots.Count - 1].transform.parent = gameObject.transform;
         slots[slots.Count - 1].GetComponent<Weapon>().w = null;
-        Update();
     }
 
     public void changeSlot(int index, WeaponSO w) {
@@ -67,7 +70,6 @@ public class Inventory : MonoBehaviour {
             if (slot.GetComponent<Weapon>().w == null) {
                 slot.GetComponent<Weapon>().w = w;
                 slot.GetComponent<Weapon>().s.sprite = w.s;
-                Update();
                 return true;
             }
         }

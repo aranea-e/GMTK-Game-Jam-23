@@ -33,6 +33,10 @@ public static class Util {
         return p;
     }
 
+    public static Transform getD() {
+        return door;
+    }
+
     public static bool creatureOccupying(Vector3 v) {
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
             if (e.t.position == v) {
@@ -77,6 +81,12 @@ public static class Util {
         return (!GameManager.world[0].HasTile(Vector3Int.FloorToInt(v)) 
                 && GameManager.world[1].HasTile(Vector3Int.FloorToInt(v))
                 && !creatureOccupying(v) && !isDoor(v));
+    }
+
+    public static bool tileAvailableIgnoreEnemies(Vector3 v) {
+        return (!GameManager.world[0].HasTile(Vector3Int.FloorToInt(v)) 
+                && GameManager.world[1].HasTile(Vector3Int.FloorToInt(v))
+                && !isDoor(v));
     }
 
     public static bool isDoor(Vector3 v) {
@@ -127,20 +137,5 @@ public static class Util {
         Vector2 direction = t - s;
         RaycastHit2D result = Physics2D.Raycast(s, direction, Vector2.Distance(s, t), GameManager.wallLM);
         return result.collider == null;
-    }
-
-    public static bool cornerLineOfSight(Vector2 s, Vector2 t) {
-        for (float sx = .375f; sx <= .625f; sx += .25f) {
-            for (float sy = .375f; sy <= .625f; sy += .25f) {
-                for (float tx = .375f; tx <= .625f; tx += .25f) {
-                    for (float ty = .375f; ty <= .625f; ty += .25f) {
-                        if (lineOfSight(new Vector2(s.x + sx, s.y + sy), new Vector2(t.x + tx, t.y + ty))) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 }
