@@ -11,7 +11,7 @@ public class GameManagerHelper : MonoBehaviour {
     [SerializeField] bool ii;
     [SerializeField] WeaponSO[] bweapons;
     [SerializeField] WeaponSO[] weapons;
-    [SerializeField] float moveInterval;
+    public float moveInterval;
 
     void Awake() {
         GameManager.setup(targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons, moveInterval);

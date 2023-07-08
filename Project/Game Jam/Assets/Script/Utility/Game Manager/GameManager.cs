@@ -16,6 +16,7 @@ public static class GameManager {
     public static float moveInterval;
     public static float moveTimer;
     public static bool isPaused;
+    public static bool canPause;
     public static float delay;
     public static bool showAnims;
 
@@ -31,7 +32,8 @@ public static class GameManager {
         baseWeaponSOs = bweapons;
         weaponSOs = weapons;
         moveInterval = mI;
-        revertWeapons();
+        canPause = false;
+        isPaused = true;
     }
 
     public static void revertWeapons() {

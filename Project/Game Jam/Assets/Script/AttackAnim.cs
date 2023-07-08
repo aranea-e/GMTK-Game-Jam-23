@@ -25,9 +25,9 @@ public class AttackAnim : MonoBehaviour {
     public void manualUpdate() {
         sr.sprite = sprite;
         if (player) {
-            timer = GameManager.timer;
+            timer = GameManager.timer / GameManager.moveInterval;
         } else {
-            timer = GameManager.timer - 0.5f;
+            timer = (GameManager.timer / GameManager.moveInterval) - 0.5f;
         }
 
         if (timer <= 0f) {

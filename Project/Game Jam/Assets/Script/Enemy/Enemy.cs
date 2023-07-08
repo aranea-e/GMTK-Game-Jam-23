@@ -35,11 +35,11 @@ public class Enemy : MonoBehaviour {
     }
 
     public void Update() {
-        if (GameManager.timer >= 0.5f) {
+        if (GameManager.timer >= (GameManager.moveInterval / 2f)) {
             if (markForDestuction == true) {
                 Destroy(gameObject);
             }
-            Util.moveSprite(srt, last, t.position, GameManager.timer - 0.5f);
+            Util.moveSprite(srt, last, t.position, (GameManager.timer - (GameManager.moveInterval / 2f)) / GameManager.moveInterval);
             hpbar.localScale = new Vector3((hp/(float) so.hp) * (10/16f), (2/16f), 1);
         } else {
             Util.moveSprite(srt, last, t.position, 0f);

@@ -89,7 +89,8 @@ public class Room {
 
     public void checkIfDoor() {
         if (!FloorGenerator.doorRoomMade &&
-            !doors[0] && !doors[1] && doors[2] && !doors[3]) {
+            !doors[0] && !doors[1] && doors[2] && !doors[3] &&
+            FloorGenerator.lastRound) {
             startOrEnd = 2;
             FloorGenerator.doorRoomMade = true;
         }

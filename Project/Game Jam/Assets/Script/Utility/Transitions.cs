@@ -127,7 +127,8 @@ public class Transitions : MonoBehaviour{
                         Destroy(block);
                     }
                 }
-                GameManager.isPaused = false;
+                GameManager.isPaused = true;
+                GameManager.canPause = true;
             }
         }
     }
@@ -140,7 +141,9 @@ public class Transitions : MonoBehaviour{
         this.con = c;
         switch (con) {
             case 1:
+            case 3:
                 floor = 0;
+                GameManager.revertWeapons();
                 break;
             case 2:
                 floor++;
@@ -149,9 +152,6 @@ public class Transitions : MonoBehaviour{
                     trans(3);
                     return;
                 }
-                break;
-            case 3:
-                floor = 0;
                 break;
         }
         time = 0f;

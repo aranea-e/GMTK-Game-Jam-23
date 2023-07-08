@@ -7,11 +7,13 @@ public class PathfindShortcutNode {
     public PathfindShortcutNode from;
     public int distance;
     public bool nodesCreated = false;
+    public Vector2 entrance;
 
     public PathfindShortcutNode(Room r, PathfindShortcutNode from, int distance) {
         this.r = r;
         this.from = from;
         this.distance = distance;
+        entrance = Vector2.zero;
     }
 
     public void createNewNodes() {
@@ -35,5 +37,22 @@ public class PathfindShortcutNode {
                 }
             }
         }
+    }
+
+    public void findEntrance(PathfindShortcutNode PSN) {
+        Vector2 mod = Vector2.zero;
+        if (PSN.r.pos.x > r.pos.x) {
+            mod = new Vector2(3, 0);
+        }
+        if (PSN.r.pos.x < r.pos.x) {
+            mod = new Vector2(-3, 0);
+        }
+        if (PSN.r.pos.y > r.pos.y) {
+            mod = new Vector2(0, 3);
+        }
+        if (PSN.r.pos.y < r.pos.y) {
+            mod = new Vector2(0, -3);
+        }
+        entrance = (r.pos * new Vector2(7, 7)) + mod;
     }
 }

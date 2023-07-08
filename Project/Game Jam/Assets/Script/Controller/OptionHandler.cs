@@ -9,6 +9,7 @@ public class OptionHandler : MonoBehaviour {
     bool canGive;
     bool heal;
     List<Vector2> moveTargets;
+    [SerializeField] SpriteRenderer nonInteractionField;
 
     void Awake() {
         Enemy.options = optionSOs;
@@ -69,7 +70,7 @@ public class OptionHandler : MonoBehaviour {
                 break;
         }
 
-        if (!newSelection) {
+        if (!newSelection && !Util.mouseInBounds(nonInteractionField.bounds.min, nonInteractionField.bounds.max)) {
             foreach (Enemy e in FindObjectsOfType<Enemy>()) {
                 if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(e.sr.transform.position - new Vector3(0.5f, 0.5f, 0f), 
                                                                     e.sr.transform.position + new Vector3(0.5f, 0.5f, 0f))

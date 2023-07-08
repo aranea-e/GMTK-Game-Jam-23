@@ -46,7 +46,10 @@ public class Player : MonoBehaviour {
         if (!GameManager.isPaused) {
             GameManager.timer += Time.deltaTime;
             GameManager.moveTimer += Time.deltaTime;
+            FindObjectOfType<PausePlay>().s.enabled = true;
         } else {
+            FindObjectOfType<PausePlay>().s.value = 1;
+            FindObjectOfType<PausePlay>().s.enabled = false;
             if (GameManager.showAnims){
                 GameManager.timer += Time.deltaTime;
                 switch (con) {
@@ -82,13 +85,13 @@ public class Player : MonoBehaviour {
             
         }
 
-        if (GameManager.timer >= 0.5f) {
+        if (GameManager.timer >= (GameManager.moveInterval / 2f)) {
             FindObjectOfType<Treasury>().addCoin(damageDealt / 5);
             damageDealt -= (damageDealt / 5) * 5;
         }
 
-        if (GameManager.timer >= 1f || (GameManager.timer >= 0.5f && !Util.enemiesMoving())) {
-            GameManager.timer = 1f;
+        if (GameManager.timer >= GameManager.moveInterval || (GameManager.timer >= (GameManager.moveInterval / 2f) && !Util.enemiesMoving())) {
+            GameManager.timer = GameManager.moveInterval;
             hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
         }
 
@@ -105,8 +108,8 @@ public class Player : MonoBehaviour {
             GameManager.moveTimer = GameManager.moveInterval;
         }
         
-        if (GameManager.timer < 0.5f) {
-            Util.moveSprite(srt, last, t.position, GameManager.timer);
+        if (GameManager.timer < (GameManager.moveInterval / 2f)) {
+            Util.moveSprite(srt, last, t.position, (GameManager.timer / GameManager.moveInterval));
         } else {
             Util.moveSprite(srt, last, t.position, 0.5f);
         }
@@ -156,6 +159,7 @@ public class Player : MonoBehaviour {
     public void move(Vector2 v) {
         if (Util.isDoor(v)) {
             GameManager.isPaused = true;
+            GameManager.canPause = false;
             GameManager.showAnims = false;
             GameManager.delay = 1f;
             con = 1;
@@ -203,6 +207,7 @@ public class Player : MonoBehaviour {
         hp -= damage;
         if (hp <= 0) {
             GameManager.isPaused = true;
+            GameManager.canPause = false;
             GameManager.showAnims = false;
             GameManager.delay = 1f;
             con = 2;

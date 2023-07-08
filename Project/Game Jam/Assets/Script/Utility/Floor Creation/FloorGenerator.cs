@@ -93,10 +93,16 @@ public static class FloorGenerator {
             }
         }
         if (tPSN.from != null) {
+            tPSN.from.findEntrance(tPSN);
             tPSN = tPSN.from;
         }
 
-        return (tPSN.r.pos * new Vector2(7, 7));
+        if (tPSN.entrance != Vector2.zero) {
+            return tPSN.entrance;
+        } else {
+            return (tPSN.r.pos * new Vector2(7, 7));
+        }
+        
     }
 
     static bool isTileInRoom(Vector3 t, Room r) {
