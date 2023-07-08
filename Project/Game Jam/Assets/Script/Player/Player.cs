@@ -6,13 +6,14 @@ public class Player : MonoBehaviour {
     public string target;
     public Enemy targetEnemy;
     public bool testing;
-    public bool win;
+    public int con;
 
     public Transform t;
     [SerializeField] Transform door;
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Transform srt;
     [SerializeField] Sprite[] s;
+    [SerializeField] Sprite ded;
     Vector3 last;
     public WeaponSO w;
     public int mhp;
@@ -23,11 +24,17 @@ public class Player : MonoBehaviour {
     [SerializeField] Transform hpbar;
     public Inventory inven;
     int damageDealt;
+    public bool transitioned;
     
     void Awake() {
         last = t.position;
         inven = FindObjectOfType<Inventory>();
         Util.startup(this, door);
+    }
+
+    public void updateHP(int health) {
+        mhp = health;   
+        hp = mhp;
     }
 
     [ContextMenu("stay")]
@@ -42,11 +49,28 @@ public class Player : MonoBehaviour {
         } else {
             if (GameManager.showAnims){
                 GameManager.timer += Time.deltaTime;
-                if (win) {
-                    if (GameManager.timer > 0.5f) {
-                    GameManager.timer = 0.5f;
-                    hpbar.localPosition = Vector3.zero;
-                    }
+                switch (con) {
+                    case 1:
+                        if (GameManager.timer > 0.5f) {
+                            GameManager.timer = 0.5f;
+                            hpbar.localPosition = Vector3.zero;
+                            if (!transitioned){
+                                Transitions.Transition(con);
+                                transitioned = true;
+                            }
+                            
+                        }
+                        break;
+                    case 2:
+                        if (GameManager.timer > 1f) {
+                            GameManager.timer = 1f;
+                            sr.sprite = ded;
+                            if (!transitioned){
+                                Transitions.Transition(con);
+                                transitioned = true;
+                            }
+                        }
+                        break;
                 }
                 
             } else {
@@ -69,6 +93,9 @@ public class Player : MonoBehaviour {
         }
 
         if (GameManager.moveTimer >= GameManager.moveInterval && !GameManager.isPaused) {
+            foreach (AttackAnim a in FindObjectsOfType<AttackAnim>()) {
+                Destroy(a.gameObject);
+            }
             GameManager.moveTimer = 0f;
             determineTarget();
             move(playerPathfind());
@@ -82,6 +109,10 @@ public class Player : MonoBehaviour {
             Util.moveSprite(srt, last, t.position, GameManager.timer);
         } else {
             Util.moveSprite(srt, last, t.position, 0.5f);
+        }
+
+        foreach (AttackAnim a in FindObjectsOfType<AttackAnim>()) {
+            a.manualUpdate();
         }
     }
 
@@ -125,8 +156,9 @@ public class Player : MonoBehaviour {
     public void move(Vector2 v) {
         if (Util.isDoor(v)) {
             GameManager.isPaused = true;
+            GameManager.showAnims = false;
             GameManager.delay = 1f;
-            win = true;
+            con = 1;
             FindObjectOfType<DragCamera>().cameraControl = false;
             FindObjectOfType<DragCamera>().cameraTarget = Util.getD().position + new Vector3(0f, 0f, -10f);
             FindObjectOfType<DragCamera>().timeSinceTarget = 0f;
@@ -170,7 +202,13 @@ public class Player : MonoBehaviour {
 
         hp -= damage;
         if (hp <= 0) {
-            Debug.Log("ded");
+            GameManager.isPaused = true;
+            GameManager.showAnims = false;
+            GameManager.delay = 1f;
+            con = 2;
+            FindObjectOfType<DragCamera>().cameraControl = false;
+            FindObjectOfType<DragCamera>().cameraTarget = t.position + new Vector3(0f, 0f, -10f);
+            FindObjectOfType<DragCamera>().timeSinceTarget = 0f;
             hp = 0;
         }
     }

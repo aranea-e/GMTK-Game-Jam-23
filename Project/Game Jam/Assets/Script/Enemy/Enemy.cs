@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
     float timer;
     public Vector3 last;
     public int hp;
+    public bool markForDestuction;
     public bool moving;
     [SerializeField] Transform hpbar;
     public bool healSickness;
@@ -35,11 +36,14 @@ public class Enemy : MonoBehaviour {
 
     public void Update() {
         if (GameManager.timer >= 0.5f) {
+            if (markForDestuction == true) {
+                Destroy(gameObject);
+            }
             Util.moveSprite(srt, last, t.position, GameManager.timer - 0.5f);
+            hpbar.localScale = new Vector3((hp/(float) so.hp) * (10/16f), (2/16f), 1);
         } else {
             Util.moveSprite(srt, last, t.position, 0f);
         }
-        hpbar.localScale = new Vector3((hp/(float) so.hp) * (10/16f), (2/16f), 1);
         optionSprite.sprite = currentOption.s;
     }
 
@@ -113,7 +117,7 @@ public class Enemy : MonoBehaviour {
         }
 
         if (hp <= 0) {
-            Destroy(gameObject);
+            markForDestuction = true;
         }
     }
 

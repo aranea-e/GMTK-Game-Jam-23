@@ -19,10 +19,12 @@ public class FloorGeneratorHelper : MonoBehaviour {
     public GameObject weaponPrefab;
     public GameObject door;
 
-    void Start() {
+    public void onLoad(int baseSize) {
         FloorGenerator.visualizers = visualizers;
         FloorGenerator.createFloor(baseSize);
         Generate();
+        FindObjectOfType<Player>().updateHP(baseSize * 10);
+        Transitions.levelLoaded = true;
     }
 
     [ContextMenu("Debug")]

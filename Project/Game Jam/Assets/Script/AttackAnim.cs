@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackAnim : MonoBehaviour
-{
+public class AttackAnim : MonoBehaviour {
     bool ranged;
-    bool player;
+    public bool player;
     Sprite sprite;
     Vector3 from;
     Vector3 to;
     [SerializeField] Transform t;
     [SerializeField] SpriteRenderer sr;
-    float timer;
-    float adTime;
+    public float timer;
 
     public void passVars(bool ranged, bool player, Sprite sprite, Vector3 from, Vector3 to) {
         this.ranged = ranged;
@@ -21,29 +19,28 @@ public class AttackAnim : MonoBehaviour
         this.from = from;
         this.to = to;
         timer = 0f;
-        Update();
+        manualUpdate();
     }
 
-    void Update() {
+    public void manualUpdate() {
         sr.sprite = sprite;
-        timer += Time.deltaTime;
         if (player) {
-            adTime = timer;
+            timer = GameManager.timer;
         } else {
-            adTime = timer - 0.5f;
+            timer = GameManager.timer - 0.5f;
         }
 
-        if (adTime < 0f) {
-            adTime = 0f;
+        if (timer <= 0f) {
+            timer = 0f;
             sr.enabled = false;
-        } else if (adTime > 0.5f) {
+        } else if (timer >= 0.5f) {
             Destroy(gameObject);
         } else {
             sr.enabled = true;
         }
 
         if (ranged) {
-            Util.moveSprite(t, from, to, adTime);
+            Util.moveSprite(t, from, to, timer);
             Vector3 target = from - to;
             float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg + 90;
             t.rotation = Quaternion.Euler(new Vector3(0, 0, angle));

@@ -165,6 +165,7 @@ public static class GameManager {
     }
 
     public static void attackAnim(bool ranged, bool player, Sprite sprite, Vector3 from, Vector3 to) {
+        timer = 0f;
         Object.Instantiate(attackPrefab, from, Quaternion.identity).GetComponent<AttackAnim>().passVars(
             ranged, player, sprite, from, to);
     }

@@ -74,6 +74,11 @@ public static class Util {
                 return true;
             }
         }
+        foreach (AttackAnim a in Object.FindObjectsOfType<AttackAnim>()) {
+            if (!a.player) {
+                return true;
+            }
+        }
         return false;
     }
 
