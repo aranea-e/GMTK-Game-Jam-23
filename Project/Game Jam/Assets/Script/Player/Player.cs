@@ -16,6 +16,9 @@ public class Player : MonoBehaviour {
     public WeaponSO w;
     public int mhp;
     public int hp;
+    public int hpTimer;
+    public int regenRate;
+    public int regenAmount;
     [SerializeField] Transform hpbar;
     public Inventory inven;
     
@@ -34,15 +37,19 @@ public class Player : MonoBehaviour {
         GameManager.timer += Time.deltaTime;
         GameManager.moveTimer += Time.deltaTime;
 
-        if (GameManager.moveTimer >= GameManager.moveInterval) {
+        if (GameManager.timer >= 1f || (GameManager.timer >= .5f && !Util.enemiesMoving())) {
+            GameManager.timer = 1f;
+            hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
+        }
+
+        if (GameManager.moveTimer >= GameManager.moveInterval && !GameManager.isPaused) {
             GameManager.moveTimer = 0f;
             determineTarget();
             move(playerPathfind());
         }
 
-        if (GameManager.timer >= 1f || (GameManager.timer >= .5f && !Util.enemiesMoving())) {
-            GameManager.timer = 1f;
-            hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
+        if (GameManager.isPaused) {
+            GameManager.moveTimer = GameManager.moveInterval;
         }
         
         if (GameManager.timer < 0.5f) {
@@ -107,6 +114,12 @@ public class Player : MonoBehaviour {
         Util.face(t.position, v, sr, s);
         setPos(v);
         Util.moveSprite(srt, last, t.position, 0f);
+
+        hpTimer++;
+        if (hpTimer >= regenRate) {
+            hp += regenAmount;
+            hpTimer = 0;
+        } 
 
         GameManager.onPlayerAction();
     }

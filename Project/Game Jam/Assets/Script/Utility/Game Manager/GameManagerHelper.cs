@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GameManagerHelper : MonoBehaviour {
-    [SerializeField] TargetSO[] targets;
     [SerializeField] GameObject targetPrefab;
     [SerializeField] GameObject attackPrefab;
     [SerializeField] Tilemap[] world;
@@ -15,7 +14,7 @@ public class GameManagerHelper : MonoBehaviour {
     [SerializeField] float moveInterval;
 
     void Awake() {
-        GameManager.setup(targets, targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons, moveInterval);
+        GameManager.setup(targetPrefab, attackPrefab, world, lm, ii, bweapons, weapons, moveInterval);
     }
 
     void Start() {

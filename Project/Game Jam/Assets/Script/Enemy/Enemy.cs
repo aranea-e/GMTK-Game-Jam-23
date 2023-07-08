@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
 
     public OptionSO currentOption;
     public static OptionSO[] options;
-    public Vector2[] moveTargets;
+    public List<Vector2> moveTargets;
     public int currentTarget;
 
     void Start() {
@@ -55,7 +55,12 @@ public class Enemy : MonoBehaviour {
                 break;
             
             case "move":
-                if (moveTargets.Length > 0) {
+                if (Util.lineOfSight(t.position, Util.getP().t.position)) {
+                    currentOption = options[1];
+                    pathfind();
+                    return;
+                }
+                if (moveTargets.Count > 0 && Util.tileAvailable(moveTargets[0])) {
                     moveTo(Pathfind.pathfind(t.position, moveTargets[0], so.spd, so.ran, this, false, false));
                     if (moveTargets[0] == (Vector2) t.position) {
                         currentOption = options[0];
@@ -64,12 +69,15 @@ public class Enemy : MonoBehaviour {
                 break;
             
             case "patrol":
-                if (Pathfind.isInRange(t.position, Util.getP().t.position, so.vran)) {
+                if (Util.lineOfSight(t.position, Util.getP().t.position)) {
                     currentOption = options[1];
                     pathfind();
+                    return;
                 }
-                if (moveTargets.Length > currentTarget) {
-                    moveTo(Pathfind.pathfind(t.position, moveTargets[currentTarget], so.spd, so.ran, this, false, false));
+                if (moveTargets.Count > currentTarget) {
+                    if (Util.tileAvailable(moveTargets[currentTarget])){
+                        moveTo(Pathfind.pathfind(t.position, moveTargets[currentTarget], so.spd, so.ran, this, false, false));
+                    }
                     if (moveTargets[currentTarget] == (Vector2) t.position) {
                         currentTarget++;
                     }
@@ -105,6 +113,10 @@ public class Enemy : MonoBehaviour {
         if (hp <= 0) {
             Destroy(gameObject);
         }
+    }
+
+    public void heal() {
+        hp = so.hp;
     }
 
     public EnemyMods generateMods(int factor1, int factor2, int factor3) {

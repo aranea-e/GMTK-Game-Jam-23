@@ -5,43 +5,19 @@ using UnityEngine;
 public class Target : MonoBehaviour {
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Transform t;
-    public TargetSO so;
     float timeSinceSpawn;
     
-    void Update() {
+    public void Update() {
         timeSinceSpawn += Time.deltaTime;
-        sr.color = new Color(so.c.r, so.c.g, so.c.b, 
+        sr.color = new Color(.1f, .75f, .13f, 
                              (Mathf.Cos(timeSinceSpawn * 2f) + 5/3f) * 0.375f);
-        Vector2 low = new Vector2(t.position.x, t.position.y);
-        Vector2 high = new Vector2(t.position.x + 1f, t.position.y + 1f);
-        if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(low, high)) {
-            onClick();
-        }
     }
 
-    public void Update(bool f) {
-        timeSinceSpawn += Time.deltaTime;
-        sr.color = new Color(so.c.r, so.c.g, so.c.b, 
-                             (Mathf.Cos(timeSinceSpawn * 2f) + 5/3f) * 0.375f);
-        Vector2 low = new Vector2(t.position.x, t.position.y);
-        Vector2 high = new Vector2(t.position.x + 1f, t.position.y + 1f);
+    public void resetTimer() {
+        timeSinceSpawn = 0f;
     }
 
     public void Destroy() {
         Object.Destroy(gameObject);
-    }
-
-    public void onClick() {
-        switch (so.type)
-        {
-            case "move":
-                Util.getP().move(t.position);
-                break;
-            
-            case "attack":
-                Util.getP().attack(t.position);
-                break;
-        }
-        GameManager.onPlayerAction();
     }
 }

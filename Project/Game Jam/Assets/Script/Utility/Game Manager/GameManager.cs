@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class GameManager {
-    static TargetSO[] targets;
     static GameObject targetPrefab;
     static GameObject attackPrefab;
     public static List<Target> targetInstances;
@@ -16,11 +15,12 @@ public static class GameManager {
     public static WeaponSO[] weaponSOs;
     public static float moveInterval;
     public static float moveTimer;
+    public static bool isPaused;
 
-    public static void setup(TargetSO[] t, GameObject tp, GameObject ap, Tilemap[] tmps, 
+    public static void setup(GameObject tp, GameObject ap, Tilemap[] tmps, 
                              LayerMask lm, bool ii, WeaponSO[] bweapons, WeaponSO[] weapons,
                              float mI) {
-        targets = t;
+        targetInstances = new List<Target>();
         targetPrefab = tp;
         attackPrefab = ap;
         world = tmps;
@@ -51,26 +51,6 @@ public static class GameManager {
         foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
             e.pathfind();
             e.Update();
-        }
-    }
-
-    public static void createMoveTargets() {
-        destroyAllTargets();
-        targetInstances = new List<Target>();
-        Vector3[] coords = {new Vector3(Util.getP().t.position.x + 1, Util.getP().t.position.y, 0),
-                            new Vector3(Util.getP().t.position.x - 1, Util.getP().t.position.y, 0),
-                            new Vector3(Util.getP().t.position.x, Util.getP().t.position.y + 1, 0),
-                            new Vector3(Util.getP().t.position.x, Util.getP().t.position.y - 1, 0)};
-        foreach (Vector3 v in coords) {
-            if (Util.tileAvailable(v) || Util.isDoor(v)) {
-                instantiateTarget(targets[0], targetPrefab, v);
-            }
-        }
-
-        foreach (Enemy e in Object.FindObjectsOfType<Enemy>()) {
-            if (Util.lineOfSight(Util.getP().t.position, e.t.position)) {
-                instantiateTarget(targets[1], targetPrefab, e.t.position);
-            }
         }
     }
 
@@ -166,10 +146,12 @@ public static class GameManager {
     }
     #endregion
 
-    static void instantiateTarget(TargetSO so, GameObject p, Vector3 pos) {
-        targetInstances.Add(Object.Instantiate(p, pos, Quaternion.identity).GetComponent<Target>());
-        targetInstances[targetInstances.Count - 1].so = so;
-        targetInstances[targetInstances.Count - 1].Update(false);
+    public static void instantiateTarget(Vector3 pos) {
+        targetInstances.Add(Object.Instantiate(targetPrefab, pos, Quaternion.identity).GetComponent<Target>());
+        for (int i = 0; i < targetInstances.Count; i++) {
+            targetInstances[i].resetTimer();
+            targetInstances[i].Update();
+        }
     }
 
     public static void destroyAllTargets() {
@@ -177,7 +159,7 @@ public static class GameManager {
         foreach (Target t in targetInstances) {
             t.Destroy();
         }
-        targetInstances = null;
+        targetInstances = new List<Target>();
     }
 
     public static void attackAnim(bool ranged, bool player, Sprite sprite, Vector3 from, Vector3 to) {
