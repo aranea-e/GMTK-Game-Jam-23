@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Option : MonoBehaviour {
     public OptionSO so;
+    public SpriteRenderer bsr;
 
     void Update() {
         GetComponent<SpriteRenderer>().sprite = so.s;

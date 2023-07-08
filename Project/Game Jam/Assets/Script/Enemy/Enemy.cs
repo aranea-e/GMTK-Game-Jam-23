@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public EnemySOModded so;
     public EnemySO soBase;
-    public OptionSO currentOption;
     public SpriteRenderer optionSprite;
     public Transform t;
     public Transform srt;
@@ -20,6 +19,11 @@ public class Enemy : MonoBehaviour {
     public int baseSizeOnGen;
     public int roomNumberOnGen;
     public int roomCountOnGen;
+
+    public OptionSO currentOption;
+    public static OptionSO[] options;
+    public Vector2[] moveTargets;
+    public int currentTarget;
 
     void Start() {
         so = new EnemySOModded(soBase);
@@ -45,7 +49,41 @@ public class Enemy : MonoBehaviour {
     }
     
     public void pathfind() {
-        moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran, this, true, false));
+        switch (currentOption.n) {
+            case "attack":
+                moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, 9999, so.ran, this, true, false));
+                break;
+            
+            case "move":
+                if (moveTargets.Length > 0) {
+                    moveTo(Pathfind.pathfind(t.position, moveTargets[0], so.spd, 9999, so.ran, this, false, false));
+                    if (moveTargets[0] == (Vector2) t.position) {
+                        currentOption = options[0];
+                    }
+                }
+                break;
+            
+            case "patrol":
+                if (Pathfind.isInRange(t.position, Util.getP().t.position, so.vran)) {
+                    currentOption = options[1];
+                    pathfind();
+                }
+                if (moveTargets.Length > currentTarget) {
+                    moveTo(Pathfind.pathfind(t.position, moveTargets[currentTarget], so.spd, 9999, so.ran, this, false, false));
+                    if (moveTargets[currentTarget] == (Vector2) t.position) {
+                        currentTarget++;
+                    }
+                } else {
+                    currentTarget = 0;
+                    pathfind();
+                }
+                break;
+            
+            case "guard":
+            default:
+                moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.vran, so.ran, this, true, false));
+                break;
+        }
     }
 
     void moveTo(Vector3 p) {
