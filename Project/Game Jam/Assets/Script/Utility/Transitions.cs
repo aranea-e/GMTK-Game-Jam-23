@@ -15,17 +15,16 @@ public class Transitions : MonoBehaviour{
     public bool detransitioning;
     public TextMeshProUGUI text;
     public Vector2 textInit;
-    public int floor;
+    public static int floor;
     public int con;
-    public static bool levelLoaded;
 
     void Awake() {
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void Start() {
-        Object.FindObjectOfType<FloorGeneratorHelper>().onLoad(5);
-        floor = 1;
+        if (Object.FindObjectsOfType<Transitions>().Length > 1) {
+            Destroy(gameObject);
+        } else {
+            DontDestroyOnLoad(gameObject);
+            floor = 0;
+        }
     }
 
     void Update() {
@@ -56,6 +55,9 @@ public class Transitions : MonoBehaviour{
                     case 2:
                         text.text = "Level " + floor.ToString();
                         break;
+                    case 3:
+                        text.text = "Dungeon defence success! Thanks for playing!";
+                        break;
                 }
                 float adjusted = time - 1f;
                 if (adjusted > 0.5f) {
@@ -68,66 +70,64 @@ public class Transitions : MonoBehaviour{
                 transitioning = false;
                 detransitioning = true;
                 switch (con) {
+                    case 3:
                     case 1:
-                        levelLoaded = false;
-                        SceneManager.LoadScene(1);
+                        SceneManager.LoadScene(0);
                         break;
                     case 2:
-                        levelLoaded = false;
-                        SceneManager.LoadScene(0);
+                        SceneManager.LoadScene(1);
                         break;
                 }
             }
         }
         if (detransitioning) {
-            if (levelLoaded) {
-                time -= Time.deltaTime;
-                for (int x = 0; x < blocks.Length; x++) {
-                for (int y = 0; y < blocks[x].Length; y++) {
-                    float delay = (((17 - x) + (40 - y * 4)) / 57f);
-                    float adjusted = time - delay;
-                    if (adjusted < 0f) {
-                        adjusted = 0f;
-                    }
-                    if (adjusted > 0.5f) {
-                        adjusted = 0.5f;
-                    }
-                    float tPercent = adjusted / 0.5f;
-                    float iPercent = (0.5f - adjusted) / 0.5f;
-                    Vector2 target = blockInit[x][y] * iPercent + blockTargets[x][y] * tPercent;
-                    blocks[x][y].GetComponent<RectTransform>().anchoredPosition = target;
+            time -= Time.deltaTime;
+            for (int x = 0; x < blocks.Length; x++) {
+            for (int y = 0; y < blocks[x].Length; y++) {
+                float delay = (((17 - x) + (40 - y * 4)) / 57f);
+                float adjusted = time - delay;
+                if (adjusted < 0f) {
+                    adjusted = 0f;
                 }
+                if (adjusted > 0.5f) {
+                    adjusted = 0.5f;
                 }
-                text.text = "";
-                if (time > 1f) {
-                    switch (con) {
-                        case 1:
-                            text.text = "Game Over";
-                            break;
-                        case 2:
-                            text.text = "Level " + floor.ToString();
-                            break;
-                    }
-                    float adjusted = time - 1f;
-                    if (adjusted > 0.5f) {
-                        adjusted = 0.5f;
-                    }
-                    float percent = (0.5f - adjusted) / 0.5f;
-                    text.GetComponent<RectTransform>().anchoredPosition = textInit * percent;
+                float tPercent = adjusted / 0.5f;
+                float iPercent = (0.5f - adjusted) / 0.5f;
+                Vector2 target = blockInit[x][y] * iPercent + blockTargets[x][y] * tPercent;
+                blocks[x][y].GetComponent<RectTransform>().anchoredPosition = target;
+            }
+            }
+            text.text = "";
+            if (time > 1f) {
+                switch (con) {
+                    case 1:
+                        text.text = "Game Over";
+                        break;
+                    case 2:
+                        text.text = "Level " + floor.ToString();
+                        break;
+                    case 3:
+                        text.text = "Dungeon defence success! Thanks for playing!";
+                        break;
                 }
-                if (time <= 0f) {
-                    time = 0f;
-                    detransitioning = false;
-                    foreach (GameObject[] arr in blocks)
-                    {
-                        foreach (GameObject block in arr) {
-                            Destroy(block);
-                        }
-                    }
-                    GameManager.isPaused = false;
+                float adjusted = time - 1f;
+                if (adjusted > 0.5f) {
+                    adjusted = 0.5f;
                 }
-            } else {
-                Object.FindObjectOfType<FloorGeneratorHelper>().onLoad(6 - floor);
+                float percent = (0.5f - adjusted) / 0.5f;
+                text.GetComponent<RectTransform>().anchoredPosition = textInit * percent;
+            }
+            if (time <= 0f) {
+                time = 0f;
+                detransitioning = false;
+                foreach (GameObject[] arr in blocks)
+                {
+                    foreach (GameObject block in arr) {
+                        Destroy(block);
+                    }
+                }
+                GameManager.isPaused = false;
             }
         }
     }
@@ -140,10 +140,18 @@ public class Transitions : MonoBehaviour{
         this.con = c;
         switch (con) {
             case 1:
-                floor = 1;
+                floor = 0;
                 break;
             case 2:
                 floor++;
+                if (floor > 4)
+                {
+                    trans(3);
+                    return;
+                }
+                break;
+            case 3:
+                floor = 0;
                 break;
         }
         time = 0f;

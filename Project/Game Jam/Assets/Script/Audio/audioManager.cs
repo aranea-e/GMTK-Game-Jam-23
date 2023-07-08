@@ -11,14 +11,20 @@ public class audioManager : MonoBehaviour {
     public sound[] sounds;
 
     void Awake() {
-        foreach (sound s in sounds) {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
+        if (FindObjectsOfType<audioManager>().Length > 1) {
+            Destroy(gameObject);
+        } else {
+            DontDestroyOnLoad(this);
+            foreach (sound s in sounds) {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.source.clip = s.clip;
 
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
+            }
         }
+        
     }
 
     void Start() {
