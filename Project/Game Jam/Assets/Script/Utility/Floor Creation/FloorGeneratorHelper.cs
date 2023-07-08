@@ -137,7 +137,7 @@ public class FloorGeneratorHelper : MonoBehaviour {
         }
         
         foreach (WeaponSO weapon in items) {
-            if (RandPercent(5f)) {
+            if (RandPercent(50f)) {
                 return weapon;
             }
         }

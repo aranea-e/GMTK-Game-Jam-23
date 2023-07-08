@@ -1855,7 +1855,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 
-  testing: 1
+  targetEnemy: {fileID: 0}
+  testing: 0
   t: {fileID: 1393067846}
   door: {fileID: 1305622804}
   sr: {fileID: 2034100926}
@@ -1866,8 +1867,8 @@ MonoBehaviour:
   - {fileID: 509978589, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   - {fileID: 1278930918, guid: 3ed778dae65404c40a3d442fcb510f94, type: 3}
   w: {fileID: 11400000, guid: cabcb7bce90ac6447b80025ef020383b, type: 2}
-  mhp: 5
-  hp: 5
+  mhp: 50
+  hp: 50
   hpbar: {fileID: 601060995}
   inven: {fileID: 0}
 --- !u!1 &1520955116

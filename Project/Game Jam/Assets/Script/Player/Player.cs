@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     public string target;
+    public Enemy targetEnemy;
     public bool testing;
 
     public Transform t;
@@ -63,8 +64,9 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        if (GameManager.isEnemyInSight(4)) {
+        if (GameManager.isEnemyInSight(4) || targetEnemy != null) {
             target = "attackEnemy";
+            targetEnemy = GameManager.closestEnemyInSight();
             return;
         }
 
@@ -75,16 +77,13 @@ public class Player : MonoBehaviour {
 
         if (GameManager.isEnemyInSight(7)) {
             target = "attackEnemy";
+            targetEnemy = GameManager.closestEnemyInSight();
             return;
         }
 
-        if (GameManager.isEnemy(25)) {
+        if (GameManager.isEnemy(5)) {
             target = "attackEnemy";
-            return;
-        }
-
-        if (GameManager.isItem(15)) {
-            target = "retrieveItem";
+            targetEnemy = GameManager.closestEnemyInSight();
             return;
         }
 
@@ -101,29 +100,9 @@ public class Player : MonoBehaviour {
             Debug.Log("u lose :(");
         }
         if (Util.itemOccupying(v) != null) {
-            if (Util.itemOccupying(v).invenSlot) {
-                inven.addSlot();
-                Destroy(Util.itemOccupying(v).gameObject);
-            } else if (inven.contains(Util.itemOccupying(v).w) != -1) {
-                if (Util.itemOccupying(v).mods.x > 0 || Util.itemOccupying(v).mods.y > 0) {
-                    Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
-                    Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
-                    inven.changeSlot(inven.contains(Util.itemOccupying(v).w), Util.itemOccupying(v).w);
-                    Destroy(Util.itemOccupying(v).gameObject);
-                }
-            } else if (inven.isFull()) {
-                if (GameManager.infiniteInven) {
-                    Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
-                    Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
-                    inven.addSlot(Util.itemOccupying(v).w);
-                    Destroy(Util.itemOccupying(v).gameObject);
-                }
-            } else {
-                Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
-                Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
-                inven.changeSlot(Util.itemOccupying(v).w);
-                Destroy(Util.itemOccupying(v).gameObject);
-            }
+            Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
+            Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
+            Destroy(Util.itemOccupying(v).gameObject);
         }
         Util.face(t.position, v, sr, s);
         setPos(v);

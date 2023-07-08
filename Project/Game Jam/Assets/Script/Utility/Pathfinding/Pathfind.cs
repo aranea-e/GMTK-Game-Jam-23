@@ -64,7 +64,6 @@ public static class Pathfind {
         }
 
         if (found) { distance = 1; }
-        Debug.Log(distance + " " + ran + " " + Util.lineOfSight(s, t) + " " + attack);
         if (distance <= ran && Util.lineOfSight(s, t) && attack) {
             if (current != null && current.hp > 0) {
                 current.attack(target);

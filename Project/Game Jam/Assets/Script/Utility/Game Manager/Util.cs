@@ -134,6 +134,14 @@ public static class Util {
     public static bool lineOfSight(Vector2 s, Vector2 t) {
         s = new Vector2(s.x + .5f, s.y + .5f);
         t = new Vector2(t.x + .5f, t.y + .5f);
+        return raycastHit(s, t) ||
+               raycastHit(s + new Vector2(3/16f, 0), t) ||
+               raycastHit(s + new Vector2(0, 3/16f), t) ||
+               raycastHit(s + new Vector2(-3/16f, 0), t) ||
+               raycastHit(s + new Vector2(0, -3/16f), t);
+    }
+
+    static bool raycastHit(Vector2 s, Vector2 t) {
         Vector2 direction = t - s;
         RaycastHit2D result = Physics2D.Raycast(s, direction, Vector2.Distance(s, t), GameManager.wallLM);
         return result.collider == null;
