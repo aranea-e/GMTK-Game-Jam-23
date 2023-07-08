@@ -16,6 +16,8 @@ public static class GameManager {
     public static float moveInterval;
     public static float moveTimer;
     public static bool isPaused;
+    public static float delay;
+    public static bool showAnims;
 
     public static void setup(GameObject tp, GameObject ap, Tilemap[] tmps, 
                              LayerMask lm, bool ii, WeaponSO[] bweapons, WeaponSO[] weapons,

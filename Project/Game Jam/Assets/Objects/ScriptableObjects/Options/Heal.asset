@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: 
   n: heal
-  price: 0
+  price: 1
   s: {fileID: 1807779033, guid: 88b6d47b5735ae44f8c3dd6d897edf54, type: 3}
+  targets: []

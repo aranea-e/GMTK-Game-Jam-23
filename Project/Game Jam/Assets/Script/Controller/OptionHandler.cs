@@ -54,7 +54,7 @@ public class OptionHandler : MonoBehaviour {
 
             case 2:
             case 3:
-                canGive = moveTargets.Count > 0;
+                canGive = moveTargets.Count > selected - 2;
                 heal = false;
                 break;
 
@@ -72,15 +72,18 @@ public class OptionHandler : MonoBehaviour {
         if (!newSelection) {
             foreach (Enemy e in FindObjectsOfType<Enemy>()) {
                 if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(e.sr.transform.position - new Vector3(0.5f, 0.5f, 0f), 
-                                                                    e.sr.transform.position + new Vector3(0.5f, 0.5f, 0f))) {
+                                                                    e.sr.transform.position + new Vector3(0.5f, 0.5f, 0f))
+                                                && FindObjectOfType<Treasury>().coins >= optionSOs[selected].price) {
                     if (canGive) {
                         e.currentOption = optionSOs[selected];
                         e.moveTargets = moveTargets;
                         GameManager.destroyAllTargets();
                         moveTargets = new List<Vector2>();
+                        FindObjectOfType<Treasury>().addCoin(-optionSOs[selected].price);
                     }
-                    if (heal) {
+                    if (heal && e.hp < e.so.hp) {
                         e.heal();
+                        FindObjectOfType<Treasury>().addCoin(-optionSOs[selected].price);
                     }
                 }
             }

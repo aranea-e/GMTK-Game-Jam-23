@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     public int hp;
     public bool moving;
     [SerializeField] Transform hpbar;
+    public bool healSickness;
 
     public int baseSizeOnGen;
     public int roomNumberOnGen;
@@ -55,7 +56,7 @@ public class Enemy : MonoBehaviour {
                 break;
             
             case "move":
-                if (Util.lineOfSight(t.position, Util.getP().t.position)) {
+                if (Util.lineOfSight(t.position, Util.getP().t.position) && Pathfind.isInRange(t.position, Util.getP().t.position, so.vran)) {
                     currentOption = options[1];
                     pathfind();
                     return;
@@ -69,7 +70,7 @@ public class Enemy : MonoBehaviour {
                 break;
             
             case "patrol":
-                if (Util.lineOfSight(t.position, Util.getP().t.position)) {
+                if (Util.lineOfSight(t.position, Util.getP().t.position) && Pathfind.isInRange(t.position, Util.getP().t.position, so.vran)) {
                     currentOption = options[1];
                     pathfind();
                     return;
@@ -102,7 +103,8 @@ public class Enemy : MonoBehaviour {
 
     public void attack(Vector3 target) {
         GameManager.attackAnim((so.ran > 1), false, so.atks, t.position, target);
-        Util.getP().damage(so.atk);
+        Util.getP().damage(so.atk, healSickness);
+        healSickness = false;
     }
 
     public void damage(int damage) {
@@ -117,6 +119,7 @@ public class Enemy : MonoBehaviour {
 
     public void heal() {
         hp = so.hp;
+        healSickness = true;
     }
 
     public EnemyMods generateMods(int factor1, int factor2, int factor3) {

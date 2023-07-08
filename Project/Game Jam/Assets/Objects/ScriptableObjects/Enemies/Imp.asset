@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Imp
   m_EditorClassIdentifier: 
   s: {fileID: 0}
-  hp: 3
+  hp: 4
   def: 0
   spd: 1
   vran: 7
   atk: 1
-  ran: 2
+  ran: 3
   atks: {fileID: -1614115812, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

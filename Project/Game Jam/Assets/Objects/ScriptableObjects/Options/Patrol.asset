@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Patrol
   m_EditorClassIdentifier: 
   n: patrol
-  price: 0
+  price: 3
   s: {fileID: -1754232735, guid: 88b6d47b5735ae44f8c3dd6d897edf54, type: 3}
+  targets: []

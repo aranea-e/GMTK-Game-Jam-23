@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
     public string target;
     public Enemy targetEnemy;
     public bool testing;
+    public bool win;
 
     public Transform t;
     [SerializeField] Transform door;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour {
     public int regenAmount;
     [SerializeField] Transform hpbar;
     public Inventory inven;
+    int damageDealt;
     
     void Awake() {
         last = t.position;
@@ -34,10 +36,34 @@ public class Player : MonoBehaviour {
     }
 
     public void Update() {
-        GameManager.timer += Time.deltaTime;
-        GameManager.moveTimer += Time.deltaTime;
+        if (!GameManager.isPaused) {
+            GameManager.timer += Time.deltaTime;
+            GameManager.moveTimer += Time.deltaTime;
+        } else {
+            if (GameManager.showAnims){
+                GameManager.timer += Time.deltaTime;
+                if (win) {
+                    if (GameManager.timer > 0.5f) {
+                    GameManager.timer = 0.5f;
+                    hpbar.localPosition = Vector3.zero;
+                    }
+                }
+                
+            } else {
+                GameManager.delay -= Time.deltaTime;
+                if (GameManager.delay <= 0f) {
+                    GameManager.showAnims = true;
+                }
+            }
+            
+        }
 
-        if (GameManager.timer >= 1f || (GameManager.timer >= .5f && !Util.enemiesMoving())) {
+        if (GameManager.timer >= 0.5f) {
+            FindObjectOfType<Treasury>().addCoin(damageDealt / 5);
+            damageDealt -= (damageDealt / 5) * 5;
+        }
+
+        if (GameManager.timer >= 1f || (GameManager.timer >= 0.5f && !Util.enemiesMoving())) {
             GameManager.timer = 1f;
             hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
         }
@@ -88,12 +114,6 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        if (GameManager.isEnemy(5)) {
-            target = "attackEnemy";
-            targetEnemy = GameManager.closestEnemyInSight();
-            return;
-        }
-
         target = "wander";
     }
 
@@ -104,7 +124,12 @@ public class Player : MonoBehaviour {
 
     public void move(Vector2 v) {
         if (Util.isDoor(v)) {
-            Debug.Log("u lose :(");
+            GameManager.isPaused = true;
+            GameManager.delay = 1f;
+            win = true;
+            FindObjectOfType<DragCamera>().cameraControl = false;
+            FindObjectOfType<DragCamera>().cameraTarget = Util.getD().position + new Vector3(0f, 0f, -10f);
+            FindObjectOfType<DragCamera>().timeSinceTarget = 0f;
         }
         if (Util.itemOccupying(v) != null) {
             Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
@@ -118,6 +143,9 @@ public class Player : MonoBehaviour {
         hpTimer++;
         if (hpTimer >= regenRate) {
             hp += regenAmount;
+            if (hp > mhp) {
+                hp = mhp;
+            }
             hpTimer = 0;
         } 
 
@@ -135,7 +163,11 @@ public class Player : MonoBehaviour {
         GameManager.attackAnim((w.ran > 1), true, w.s, t.position, v);
     }
 
-    public void damage(int damage) {
+    public void damage(int damage, bool healSickness) {
+        if (!healSickness) {
+            damageDealt += damage;
+        }
+
         hp -= damage;
         if (hp <= 0) {
             Debug.Log("ded");

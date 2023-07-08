@@ -15,8 +15,8 @@ MonoBehaviour:
   s: {fileID: 0}
   hp: 5
   def: 2
-  atk: 3
-  ran: 1
   spd: 1
   vran: 4
+  atk: 5
+  ran: 1
   atks: {fileID: 760592498, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}

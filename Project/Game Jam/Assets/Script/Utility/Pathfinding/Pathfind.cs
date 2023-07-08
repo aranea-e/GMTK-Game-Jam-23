@@ -23,17 +23,17 @@ public static class Pathfind {
         pts = new List<PathfindTarget>();
         coords = new List<Vector3>();
 
-        Vector3[] coordsToCheck = {new Vector3(s.x, s.y + 1, 0),
-                            new Vector3(s.x, s.y - 1, 0),
-                            new Vector3(s.x + 1, s.y, 0),
-                            new Vector3(s.x - 1, s.y, 0)};
+        Vector3[] coordsToCheck = {new Vector3(t.x, t.y + 1, 0),
+                            new Vector3(t.x, t.y - 1, 0),
+                            new Vector3(t.x + 1, t.y, 0),
+                            new Vector3(t.x - 1, t.y, 0)};
 
         Vector3 result = s;
         PathfindTarget resultT = null;
 
         bool found = false;
         for (int i = 0; i < 4; i++) {
-            if (coordsToCheck[i] == t) {
+            if (coordsToCheck[i] == s) {
                 found = true;
             }
         }
@@ -86,6 +86,15 @@ public static class Pathfind {
             return s;
         }
 
+        if (result == t && attack) {
+            result = coordsToCheck[0];
+            for (int i = 1; i < 4; i++) {
+                if (Vector3.Distance (t, coordsToCheck[i]) < Vector3.Distance (t, result)) {
+                    result = coordsToCheck[i];
+                }
+            }
+        }
+
         return result;
     }
 
@@ -98,9 +107,9 @@ public static class Pathfind {
         }
         Vector3 newT = FloorGenerator.pathfindShortcut(s, t);
         if (isInRange(s, t, 15)) {
-            return pathfind(s, newT, spd, 15, ran, c, attack, iE);
+            return pathfind(s, newT, spd, 15, ran, c, false, iE);
         }
-        return pathfind(s, newT, spd, 35, ran, c, attack, iE);
+        return pathfind(s, newT, spd, 35, ran, c, false, iE);
     }
 
     public static bool isInRange(Vector3 s, Vector3 t, int ran) {
@@ -130,7 +139,17 @@ public static class Pathfind {
         } else {
             pts.Add(new PathfindTarget(t, null, 0));
             coords.Add(t);
-            pts[0].pathfindFromTarget();
+            for (int i = 0; i < ran; i++) {
+                int count = pts.Count;
+                for (int j = 0; j < count; j++) {
+                    if (pts[j].pos == s) {
+                        j = count;
+                        i = ran;
+                    } else {
+                        pts[j].pathfindFromTarget();
+                    }
+                }
+            }
 
             for (int i = 0; i < pts.Count; i++) {
                 if (coords[i] == s && pts[i].distance <= ran) {

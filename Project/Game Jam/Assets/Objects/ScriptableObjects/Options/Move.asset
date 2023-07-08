@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   n: move
-  price: 0
+  price: 2
   s: {fileID: 115880391, guid: 88b6d47b5735ae44f8c3dd6d897edf54, type: 3}
+  targets: []

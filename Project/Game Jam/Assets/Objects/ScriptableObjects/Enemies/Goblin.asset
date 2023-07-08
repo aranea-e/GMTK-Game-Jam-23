@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   s: {fileID: 0}
   hp: 3
-  def: 1
-  atk: 1
-  ran: 1
-  spd: 1
+  def: 2
+  spd: 2
   vran: 6
+  atk: 3
+  ran: 1
   atks: {fileID: 1825745179, guid: 80c1655a64c56834bb4e70313818adcd, type: 3}
