@@ -43,7 +43,17 @@ public static class Pathfind {
         } else {
             pts.Add(new PathfindTarget(t, null, 0));
             coords.Add(t);
-            pts[0].pathfindFromTarget();
+            for (int i = 0; i < vran; i++) {
+                int count = pts.Count;
+                for (int j = 0; j < count; j++) {
+                    if (pts[j].pos == s) {
+                        j = count;
+                        i = vran;
+                    } else {
+                        pts[j].pathfindFromTarget();
+                    }
+                }
+            }
 
             for (int i = 0; i < pts.Count; i++) {
                 if (coords[i] == s && coords[i] != t && pts[i].distance < vran) {
@@ -79,12 +89,27 @@ public static class Pathfind {
         return result;
     }
 
+    public static Vector3 pathfind (Vector3 s, Vector3 t, int spd, int ran, Enemy c, bool attack, bool iE) {
+        if (isInRange(s, t, 1)) {
+            return pathfind(s, t, spd, 1, ran, c, attack, iE);
+        }
+        if (FloorGenerator.areInSameRoom(s, t)) {
+            return pathfind(s, t, spd, 35, ran, c, attack, iE);
+        }
+        Vector3 newT = FloorGenerator.pathfindShortcut(s, t);
+        if (isInRange(s, t, 15)) {
+            return pathfind(s, newT, spd, 15, ran, c, attack, iE);
+        }
+        return pathfind(s, newT, spd, 35, ran, c, attack, iE);
+    }
+
     public static bool isInRange(Vector3 s, Vector3 t, int ran) {
         if (Vector3.Distance(s, t) > ran) {
             return false;
         }
 
         target = t;
+        ignoreEnemies = true;
         pts = new List<PathfindTarget>();
         coords = new List<Vector3>();
 

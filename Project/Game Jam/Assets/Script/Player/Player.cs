@@ -166,7 +166,7 @@ public class Player : MonoBehaviour {
 
             case "moveToDoor":
             default:
-                result = Pathfind.pathfind(t.position, Util.getD().position, 1, 9999, 0, null, false, true);
+                result = Pathfind.pathfind(t.position, Util.getD().position, 1, 0, null, false, true);
                 break;
         }
 

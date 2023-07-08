@@ -51,12 +51,12 @@ public class Enemy : MonoBehaviour {
     public void pathfind() {
         switch (currentOption.n) {
             case "attack":
-                moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, 9999, so.ran, this, true, false));
+                moveTo(Pathfind.pathfind(t.position, Util.getP().t.position, so.spd, so.ran, this, true, false));
                 break;
             
             case "move":
                 if (moveTargets.Length > 0) {
-                    moveTo(Pathfind.pathfind(t.position, moveTargets[0], so.spd, 9999, so.ran, this, false, false));
+                    moveTo(Pathfind.pathfind(t.position, moveTargets[0], so.spd, so.ran, this, false, false));
                     if (moveTargets[0] == (Vector2) t.position) {
                         currentOption = options[0];
                     }
@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour {
                     pathfind();
                 }
                 if (moveTargets.Length > currentTarget) {
-                    moveTo(Pathfind.pathfind(t.position, moveTargets[currentTarget], so.spd, 9999, so.ran, this, false, false));
+                    moveTo(Pathfind.pathfind(t.position, moveTargets[currentTarget], so.spd, so.ran, this, false, false));
                     if (moveTargets[currentTarget] == (Vector2) t.position) {
                         currentTarget++;
                     }
