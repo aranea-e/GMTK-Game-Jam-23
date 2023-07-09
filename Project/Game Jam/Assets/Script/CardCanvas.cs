@@ -40,16 +40,6 @@ public class CardCanvas : MonoBehaviour {
             }
             found = true;
         }
-        if (Util.slotAt(Util.mousePosition()) != null && Util.slotAt(Util.mousePosition()).w != null) {
-            if (c != null){
-                Destroy(c.gameObject);
-            }
-            c = Instantiate(co[0], rt).GetComponent<Card>();
-            weapon = Util.slotAt(Util.mousePositionInt());
-            type = 2;
-            rt.anchoredPosition = new Vector2(Util.mousePosition().x, Util.mousePosition().y + 3f/2f);
-            found = true;
-        }
         
 
         if (found) {

@@ -309,6 +309,42 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: damage
+    clip: {fileID: 8300000, guid: 8b6d5a1674af6244bad2822b04e29a4e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: kill
+    clip: {fileID: 8300000, guid: 59bd681f00b7ed04c932e11ee5109805, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: power up
+    clip: {fileID: 8300000, guid: 8db04994d2e12c046a1c25dc9bdd7bc1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: select
+    clip: {fileID: 8300000, guid: 7ddb4db9e68c270429f855cf3ca3efc0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: win
+    clip: {fileID: 8300000, guid: 4f3c160e1d897a249b62369a3850c065, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: coin
+    clip: {fileID: 8300000, guid: 8f270ba226a51a045a1110d14beeb7d5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &120839222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2011,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1927553454}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: onSliderChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: select
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1927553453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,6 +2060,7 @@ MonoBehaviour:
   t: {fileID: 1763884255}
   m: {fileID: 2015251216}
   sfx: {fileID: 1919502877}
+  sfxPlayed: 1
 --- !u!114 &1927553455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2186,7 +2235,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1927553454}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: onSliderChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: select
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2115965991
 GameObject:
   m_ObjectHideFlags: 0

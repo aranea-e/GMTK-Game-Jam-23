@@ -7,6 +7,7 @@ public class PausePlay : MonoBehaviour {
     public Slider s;
     public Image[] images;
     public Sprite[] sprites;
+    public bool sfxPlayed;
     
     void Update() {
         if (FindObjectOfType<Transitions>().transitioning || FindObjectOfType<Transitions>().detransitioning) {
@@ -23,13 +24,23 @@ public class PausePlay : MonoBehaviour {
         } else {
             images[0].sprite = sprites[0];
         }
+
+        if (Input.GetMouseButtonUp(0) && !sfxPlayed) {
+            sfxPlayed = true;
+            FindObjectOfType<audioManager>().play("select");
+        }
     }
 
     public void buttonClicked() {
         if (GameManager.canPause){
+            FindObjectOfType<audioManager>().play("select");
             GameManager.isPaused = !GameManager.isPaused;
             GameManager.delay = 0f;
             GameManager.moveTimer = GameManager.moveInterval / 2;
         }
+    }
+
+    public void onSliderChange() {
+        sfxPlayed = false;
     }
 }

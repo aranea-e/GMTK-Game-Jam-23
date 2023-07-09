@@ -28,6 +28,12 @@ public class Transitions : MonoBehaviour{
     }
 
     void Update() {
+        if (!(transitioning || detransitioning) && Input.GetKey(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex != 0) {
+            trans(5);
+            GameManager.isPaused = true;
+            GameManager.canPause = false;
+            FindObjectOfType<audioManager>().play("select");
+        }
         if (transitioning) {
             time += Time.deltaTime;
             for (int x = 0; x < blocks.Length; x++) {
@@ -59,6 +65,7 @@ public class Transitions : MonoBehaviour{
                         text.text = "All heroes have been felled! You win!";
                         break;
                     case 4:
+                    case 5:
                         text.text = "Hit ESC to return to the menu at any time.";
                         break;
                 }
@@ -75,6 +82,7 @@ public class Transitions : MonoBehaviour{
                 switch (con) {
                     case 1:
                     case 3:
+                    case 5:
                         SceneManager.LoadScene(0);
                         break;
                     case 2:
@@ -117,6 +125,7 @@ public class Transitions : MonoBehaviour{
                         text.text = "All heroes have been felled! You win!";
                         break;
                     case 4:
+                    case 5:
                         text.text = "Hit ESC to return to the menu at any time.";
                         break;
                 }
@@ -151,6 +160,7 @@ public class Transitions : MonoBehaviour{
         switch (con) {
             case 1:
             case 3:
+            case 5:
                 floor = 0;
                 GameManager.revertWeapons();
                 break;

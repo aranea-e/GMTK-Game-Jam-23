@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour {
     public Button t;
     public Slider m;
     public Slider sfx;
+    public bool sfxPlayed;
 
     void Update() {
         if (FindObjectOfType<Transitions>().transitioning || FindObjectOfType<Transitions>().detransitioning) {
@@ -25,9 +26,19 @@ public class Menu : MonoBehaviour {
         }
         FindObjectOfType<audioManager>().changeVolume(sfx.value);
         FindObjectOfType<audioManager>().changeVolume("music", m.value);
+
+        if (Input.GetMouseButtonUp(0) && !sfxPlayed) {
+            sfxPlayed = true;
+            FindObjectOfType<audioManager>().play("select");
+        }
     }
     
     public void load(int c) {
+        FindObjectOfType<audioManager>().play("select");
         Transitions.Transition(c);
+    }
+
+    public void onSliderChange() {
+        sfxPlayed = false;
     }
 }

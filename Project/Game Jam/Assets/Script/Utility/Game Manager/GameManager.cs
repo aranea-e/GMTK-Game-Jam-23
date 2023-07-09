@@ -37,6 +37,9 @@ public static class GameManager {
     }
 
     public static void revertWeapons() {
+        if (baseWeaponSOs == null || weaponSOs == null) {
+            return;
+        }
         for (int i = 0; i < baseWeaponSOs.Length; i++) {
             weaponSOs[i].atk = baseWeaponSOs[i].atk;
             weaponSOs[i].ran = baseWeaponSOs[i].ran;

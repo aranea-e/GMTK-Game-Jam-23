@@ -70,6 +70,7 @@ public class Player : MonoBehaviour {
                             GameManager.timer = 1f;
                             sr.sprite = ded;
                             if (!transitioned){
+                                FindObjectOfType<audioManager>().play("win");
                                 Transitions.Transition(con);
                                 transitioned = true;
                             }
@@ -87,13 +88,19 @@ public class Player : MonoBehaviour {
         }
 
         if (GameManager.timer >= (GameManager.moveInterval / 2f)) {
-            FindObjectOfType<Treasury>().addCoin(damageDealt / 5);
-            damageDealt -= (damageDealt / 5) * 5;
+            if ((damageDealt / 5) > 0) {
+                FindObjectOfType<audioManager>().play("coin");
+                FindObjectOfType<Treasury>().addCoin(damageDealt / 5);
+                damageDealt -= (damageDealt / 5) * 5;
+            }
         }
 
         if (GameManager.timer >= GameManager.moveInterval || (GameManager.timer >= (GameManager.moveInterval / 2f) && !Util.enemiesMoving())) {
             GameManager.timer = GameManager.moveInterval;
-            hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
+            if (hpbar.localScale != new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1)) {
+                FindObjectOfType<audioManager>().play("damage");
+                hpbar.localScale = new Vector3((hp/(float) mhp) * (10/16f), (2/16f), 1);
+            }
         }
 
         if (GameManager.moveTimer >= GameManager.moveInterval && !GameManager.isPaused) {
@@ -132,9 +139,15 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        if (GameManager.isEnemyInSight(4) || targetEnemy != null) {
+
+        if (GameManager.isEnemyInSight(4)) {
             target = "attackEnemy";
             targetEnemy = GameManager.closestEnemyInSight();
+            return;
+        }
+        
+        if (targetEnemy != null) {
+            target = "attackEnemy";
             return;
         }
 
@@ -178,6 +191,7 @@ public class Player : MonoBehaviour {
             Util.itemOccupying(v).w.atk += (int) Util.itemOccupying(v).mods.x;
             Util.itemOccupying(v).w.ran += (int) Util.itemOccupying(v).mods.y;
             Destroy(Util.itemOccupying(v).gameObject);
+            FindObjectOfType<audioManager>().play("power up");
         }
         Util.face(t.position, v, sr, s);
         setPos(v);

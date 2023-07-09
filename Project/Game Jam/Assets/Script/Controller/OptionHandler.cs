@@ -6,9 +6,10 @@ public class OptionHandler : MonoBehaviour {
     public Option[] options;
     public OptionSO[] optionSOs;
     public int selected;
-    bool canGive;
+    public bool canGive;
     bool heal;
     List<Vector2> moveTargets;
+    public int numTargets;
     [SerializeField] SpriteRenderer nonInteractionField;
 
     void Awake() {
@@ -20,10 +21,14 @@ public class OptionHandler : MonoBehaviour {
         bool newSelection = false;
         for (int i = 0; i < options.Length; i++) {
             if (Input.GetMouseButtonDown(0) && Util.mouseInBounds(options[i].bsr.bounds.min, options[i].bsr.bounds.max)) {
+                if (selected != i && selected != -1) {
+                    FindObjectOfType<audioManager>().play("select");
+                }
                 selected = i;
                 newSelection = true;
                 GameManager.destroyAllTargets();
                 moveTargets = new List<Vector2>();
+                numTargets = 0;
             }
         }   
         if (!newSelection && (selected == 2 || selected == 3) && Util.tileAvailable(Util.mousePositionInt()) 
@@ -34,6 +39,8 @@ public class OptionHandler : MonoBehaviour {
             }
             GameManager.instantiateTarget(Util.mousePositionInt());
             moveTargets.Add(Util.mousePositionInt());
+            numTargets = moveTargets.Count;
+            FindObjectOfType<audioManager>().play("select");
         }
 
         for (int i = 0; i < options.Length; i++) {
@@ -55,7 +62,7 @@ public class OptionHandler : MonoBehaviour {
 
             case 2:
             case 3:
-                canGive = moveTargets.Count > selected - 2;
+                canGive = numTargets > selected - 2;
                 heal = false;
                 break;
 
@@ -80,11 +87,14 @@ public class OptionHandler : MonoBehaviour {
                         e.moveTargets = moveTargets;
                         GameManager.destroyAllTargets();
                         moveTargets = new List<Vector2>();
+                        numTargets = 0;
                         FindObjectOfType<Treasury>().addCoin(-optionSOs[selected].price);
+                        FindObjectOfType<audioManager>().play("select");
                     }
                     if (heal && e.hp < e.so.hp) {
                         e.heal();
                         FindObjectOfType<Treasury>().addCoin(-optionSOs[selected].price);
+                        FindObjectOfType<audioManager>().play("select");
                     }
                 }
             }
