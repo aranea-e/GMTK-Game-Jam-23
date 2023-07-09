@@ -24,7 +24,7 @@ public class FloorGeneratorHelper : MonoBehaviour {
         FloorGenerator.visualizers = visualizers;
         FloorGenerator.createFloor(baseSize);
         Generate();
-        FindObjectOfType<Player>().updateHP(baseSize * 10);
+        FindObjectOfType<Player>().updateHP(baseSize * 15);
     }
 
     [ContextMenu("Debug")]

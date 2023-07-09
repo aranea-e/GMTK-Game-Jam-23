@@ -35,4 +35,15 @@ public class audioManager : MonoBehaviour {
         sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
     }
+
+    public void changeVolume (string name, float v) {
+        sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = v;
+    }
+
+    public void changeVolume (float v) {
+        foreach (sound s in sounds) {
+            s.source.volume = v;
+        }
+    }
 }

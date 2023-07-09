@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public string target;
     public Enemy targetEnemy;
+    public Item targetItem;
     public bool testing;
     public int con;
 
@@ -139,12 +140,18 @@ public class Player : MonoBehaviour {
 
         if (GameManager.isItemInSight(25)) {
             target = "retrieveItem";
+            targetItem = GameManager.closestItemInSight();
             return;
         }
 
         if (GameManager.isEnemyInSight(7)) {
             target = "attackEnemy";
             targetEnemy = GameManager.closestEnemyInSight();
+            return;
+        }
+
+        if (targetItem != null) {
+            target = "retrieveItem";
             return;
         }
 
@@ -244,7 +251,7 @@ public class Player : MonoBehaviour {
                 if (GameManager.isItemInSight(25)) {
                     result = Pathfind.pathfind(t.position, GameManager.closestItemInSight().t.position, 1, 25, 0, null, false, false);
                 } else {
-                    result = Pathfind.pathfind(t.position, GameManager.closestItem().t.position, 1, 25, 0, null, false, false);
+                    result = Pathfind.pathfind(t.position, targetItem.t.position, 1, 25, 0, null, false, false);
                 }
                 if (result == (Vector2) t.position) {
                     target = "moveToDoor";

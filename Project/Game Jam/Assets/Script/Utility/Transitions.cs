@@ -56,7 +56,10 @@ public class Transitions : MonoBehaviour{
                         text.text = "Level " + floor.ToString();
                         break;
                     case 3:
-                        text.text = "Dungeon defence success! Thanks for playing!";
+                        text.text = "All heroes have been felled! You win!";
+                        break;
+                    case 4:
+                        text.text = "Hit ESC to return to the menu at any time.";
                         break;
                 }
                 float adjusted = time - 1f;
@@ -70,12 +73,15 @@ public class Transitions : MonoBehaviour{
                 transitioning = false;
                 detransitioning = true;
                 switch (con) {
-                    case 3:
                     case 1:
+                    case 3:
                         SceneManager.LoadScene(0);
                         break;
                     case 2:
                         SceneManager.LoadScene(1);
+                        break;
+                    case 4:
+                        SceneManager.LoadScene(2);
                         break;
                 }
             }
@@ -108,7 +114,10 @@ public class Transitions : MonoBehaviour{
                         text.text = "Level " + floor.ToString();
                         break;
                     case 3:
-                        text.text = "Dungeon defence success! Thanks for playing!";
+                        text.text = "All heroes have been felled! You win!";
+                        break;
+                    case 4:
+                        text.text = "Hit ESC to return to the menu at any time.";
                         break;
                 }
                 float adjusted = time - 1f;
